@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>421157978962-n7aqnn2kl2cf020ubkfp35t5b8tpkdi8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.421157978962-n7aqnn2kl2cf020ubkfp35t5b8tpkdi8</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>421157978962-8fo7kmnmlb0ssvmc5abmglptib0fprcj.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBmT5-saqjzP0EfjrzWKn23k7iwil_CqOw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>421157978962</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.albertkingdom.InstagramClone</string>
+	<key>PROJECT_ID</key>
+	<string>android-kotlin-login-test</string>
+	<key>STORAGE_BUCKET</key>
+	<string>android-kotlin-login-test.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:421157978962:ios:1b52bcf9fed7daba42708b</string>
+</dict>
+</plist>
