@@ -20,7 +20,7 @@ class PostCollectionViewCell: UICollectionViewCell {
             likeButton.tintColor = .red
             likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         } else {
-            likeButton.tintColor = .black
+            likeButton.tintColor = .systemGray
             likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
     
@@ -36,6 +36,9 @@ class PostCollectionViewCell: UICollectionViewCell {
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(clickUserName))
         userName_one.addGestureRecognizer(tapGR)
         userName_one.isUserInteractionEnabled = true
+        
+        likeButton.tintColor = .systemGray
+        commentButton.tintColor = .systemGray
        
     }
     

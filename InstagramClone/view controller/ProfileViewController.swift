@@ -36,7 +36,7 @@ class ProfileViewController: UIViewController {
             self.horizontalScrollBar.transform = CGAffineTransform(translationX: self.horizontalScrollBar.frame.width, y: 0)
         }, completion: nil)
     }
-    @objc func clickProfileMenu(_ sender: Any) {
+    @IBAction func clickProfileMenu(_ sender: Any) {
         let profilMenuController = UIAlertController(title: "Menu", message: "", preferredStyle: .actionSheet)
         let signOutAction = UIAlertAction(title: "登出", style: .default) { _ in
             self.signOut()
@@ -65,6 +65,7 @@ class ProfileViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+
         db = Firestore.firestore()
         // Do any additional setup after loading the view.
         collectionView.delegate = self
@@ -73,9 +74,11 @@ class ProfileViewController: UIViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         profileImageView.layer.masksToBounds = true
         updateProfileButton.layer.borderWidth = 1
-        updateProfileButton.layer.borderColor = UIColor.gray.cgColor
+        updateProfileButton.layer.cornerRadius = 3
+        updateProfileButton.layer.borderColor = UIColor.systemGray.cgColor
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .plain, target: self, action:  #selector(clickProfileMenu(_:)))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .plain, target: self, action:  #selector(clickProfileMenu(_:)))
+//        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "line.3.horizontal")
         //UIBarButtonItem(title: "add", style: .plain, target: self, action: #selector(clickProfileMenu(_:)))
 //        profileName.text = Auth.auth().currentUser?.email
         if let profilePhotoUrl = Auth.auth().currentUser?.photoURL {
