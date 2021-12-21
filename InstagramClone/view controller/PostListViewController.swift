@@ -154,7 +154,7 @@ extension PostListViewController: ProductListCellDelegate {
     }
     
     func onTouchUserName(from cell: PostCollectionViewCell) {
-        let nextVC = storyboard?.instantiateViewController(withIdentifier: "profilePage") as! ProfileViewController
+        let nextVC = storyboard?.instantiateViewController(withIdentifier: "profilePage") as! ProfileViewControllerOld
         nextVC.email = cell.userName_one.text
         navigationController?.pushViewController(nextVC, animated: true)
     }

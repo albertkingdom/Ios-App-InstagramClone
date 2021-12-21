@@ -10,39 +10,31 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
-class ProfileViewController: UIViewController {
+class ProfileViewControllerOld: UIViewController {
     var db: Firestore!
     var singleUserPostIdList: [String] = []
     var singleUserPostList: [Post] = []
     var followingUserList: [String] = []
     var othersfollowingUserList: [String] = []
     var email: String?
-    var profileBottomVC: ProfileBottomViewController!
-    @IBOutlet weak var containerViewLeftContstraint: NSLayoutConstraint!
     @IBOutlet weak var horizontalScrollBar: UIView!
     @IBOutlet weak var postCount: UILabel!
     @IBOutlet weak var followingCount: UILabel!
     
     @IBOutlet weak var fansCount: UILabel!
     @IBAction func clickButtonOne(_ sender: Any) {
-
-        containerViewLeftContstraint.constant = 0
+        scrollView.scrollRectToVisible(collectionView.frame, animated: true)
         UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: 0, animations: {
            
             self.horizontalScrollBar.transform = CGAffineTransform(translationX: 0, y: 0)
-            self.view.layoutIfNeeded() // animate the constraint change process
         }, completion: nil)
     }
     @IBAction func clickButtonTwo(_ sender: Any) {
-
-        containerViewLeftContstraint.constant = -view.frame.width
+        scrollView.scrollRectToVisible(collectionViewTwo.frame, animated: true)
         UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: 0, animations: {
            
             self.horizontalScrollBar.transform = CGAffineTransform(translationX: self.horizontalScrollBar.frame.width, y: 0)
-            self.view.layoutIfNeeded()
         }, completion: nil)
-        
-        
     }
     @IBAction func clickProfileMenu(_ sender: Any) {
         let profilMenuController = UIAlertController(title: "Menu", message: "", preferredStyle: .actionSheet)
@@ -60,11 +52,11 @@ class ProfileViewController: UIViewController {
         profilMenuController.addAction(dimissAction)
         present(profilMenuController, animated: true, completion: nil)
     }
-
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileName: UILabel!
-
-
+    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet weak var collectionViewTwo: UICollectionView!
     @IBOutlet weak var updateProfileButton: UIButton!
     
     @IBAction func touchUpdateProfileButton(_ sender: Any) {
@@ -75,7 +67,10 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         db = Firestore.firestore()
-
+        // Do any additional setup after loading the view.
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.setCollectionViewLayout(generateLayout(), animated: true)
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         profileImageView.layer.masksToBounds = true
         updateProfileButton.layer.borderWidth = 1
@@ -111,7 +106,21 @@ class ProfileViewController: UIViewController {
             downloadImage(url: profilePhotoUrl)
         }
     }
-    
+    private func generateLayout() -> UICollectionViewLayout {
+        //let spacing: CGFloat = 20
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/2))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        //        section.contentInsets = NSDirectionalEdgeInsets(top: 400, leading: 0, bottom: 0, trailing: 0)
+        //item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 0, trailing: spacing)
+        return UICollectionViewCompositionalLayout(section: section)
+        
+    }
     func signOut() {
         try? Auth.auth().signOut()
         //performSegue(withIdentifier: "toLogin", sender: nil)
@@ -121,11 +130,11 @@ class ProfileViewController: UIViewController {
     
 }
 
-extension ProfileViewController: UICollectionViewDelegate {
+extension ProfileViewControllerOld: UICollectionViewDelegate {
     
 }
 
-extension ProfileViewController: UICollectionViewDataSource {
+extension ProfileViewControllerOld: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return singleUserPostList.count
     }
@@ -176,10 +185,8 @@ extension ProfileViewController: UICollectionViewDataSource {
             }
             //                print("Current data: \(tempPostList)")
             self.singleUserPostList = tempPostList
-            self.profileBottomVC.singleUserPostList = tempPostList
             self.postCount.text = "\(String(self.singleUserPostList.count))\n 文章"
-            
-            self.profileBottomVC.collectionView.reloadData()
+            self.collectionView.reloadData()
             
         }
         
@@ -261,14 +268,4 @@ extension ProfileViewController: UICollectionViewDataSource {
 
     }
     
-    // MARK: prepare for container view
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        case "profileBottomVC":
-            let nextVC = segue.destination as! ProfileBottomViewController
-            self.profileBottomVC = nextVC
-        default:
-            return
-        }
-    }
 }

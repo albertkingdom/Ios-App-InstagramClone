@@ -27,14 +27,14 @@ class LoginViewController: UIViewController {
               // The user's ID, unique to the Firebase project.
               // Do NOT use this value to authenticate with your backend server,
               // if you have one. Use getTokenWithCompletion:completion: instead.
-             
-              let email = user.email
-              let photoURL = user.photoURL
-              
-            print("user \(email)")
-              
                 
-             
+                let email = user.email
+                let photoURL = user.photoURL
+                
+                print("user \(email)")
+                
+                
+                
                 //self.present(controller, animated: true, completion: nil)
                 self.performSegue(withIdentifier: "toTabBar", sender: nil)
             }
@@ -48,10 +48,11 @@ class LoginViewController: UIViewController {
        
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-         
-          
+                 
             if error == nil {
-                print(authResult)
+                print("login success \(authResult)")
+                
+                self?.performSegue(withIdentifier: "toTabBar", sender: nil)
             }
         }
     }
@@ -65,3 +66,4 @@ class LoginViewController: UIViewController {
 
 
 }
+

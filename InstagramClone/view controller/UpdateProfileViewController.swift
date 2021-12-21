@@ -13,7 +13,8 @@ class UpdateProfileViewController: UIViewController {
     var isSelectImage: Bool = false
     @IBOutlet weak var newNameTextField: UITextField!
     @IBOutlet weak var profileImage: UIImageView!
-   
+    @IBOutlet weak var finishButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.modalPresentationStyle = .overCurrentContext
@@ -32,6 +33,11 @@ class UpdateProfileViewController: UIViewController {
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.pickImage))
         profileImage.addGestureRecognizer(tapGR)
         profileImage.isUserInteractionEnabled = true
+        
+        finishButton.layer.borderWidth = 1
+        finishButton.layer.borderColor = UIColor.black.cgColor
+        finishButton.layer.cornerRadius = 3
+        finishButton.backgroundColor = UIColor.systemBackground
     }
     
     
@@ -76,6 +82,8 @@ class UpdateProfileViewController: UIViewController {
                         if let error = error {
                             print("\(error)")
                         }
+                        
+                        self?.navigationController?.popViewController(animated: true)
                     }
                 }
                 

@@ -17,16 +17,22 @@ class NewArticleViewController: UIViewController {
     var isUploading: Bool = false {
         didSet {
             if (isUploading) {
-//                uploadingMask.isHidden = false
-//                uploadingMaskView.isHidden = false
-//                uploadingMaskInfo.text = "發佈中..."
+
                 let loadingVC = LoadingViewController()
+                loadingVC.modalPresentationStyle = .overCurrentContext
+                //loadingVC.isModalInPresentation = true
                 present(loadingVC, animated: true, completion: nil)
             } else {
-//                uploadingMask.isHidden = true
-//                uploadingMaskView.isHidden = true
-                
-                presentedViewController?.dismiss(animated: true, completion: nil)
+
+                let currentVC = presentedViewController as! LoadingViewController
+                currentVC.textLabel.text = "Complete"
+                cleanContext()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.presentedViewController?.dismiss(animated: true, completion: nil)
+                   
+                    // switch tab
+                    self.tabBarController?.selectedIndex = 0
+                }
             }
             
         }
@@ -136,11 +142,8 @@ class NewArticleViewController: UIViewController {
         do {
             try postRef
                 .setData(from: post)
-//            isCompleteUploading = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                // switch tab
-                self.tabBarController?.selectedIndex = 0
-            }
+            isUploading = false
+           
            
         }catch let error {
             
@@ -150,12 +153,14 @@ class NewArticleViewController: UIViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        print("new article vc viewWillDisappear")
+    func cleanContext() {
+        print("cleanContext")
         postContent.text = nil
         isSelectImage = false
         postImage.image = UIImage(systemName: "photo")
-        isUploading = false
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+       
     }
     
 }
