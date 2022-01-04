@@ -40,6 +40,8 @@ class LoginViewController: UIViewController {
             }
         }
         
+        self.passwordInput.setupRightButton(imageName: "eye")
+        
     }
     func login() {
         guard let email = emailInput.text, let password = passwordInput.text else {

@@ -34,8 +34,8 @@ class ProfileViewController: UIViewController {
         }, completion: nil)
     }
     @IBAction func clickButtonTwo(_ sender: Any) {
-
-        containerViewLeftContstraint.constant = -view.frame.width
+        print("profileBottomVC.view.frame.width..\(profileBottomVC.view.frame.width)")
+        containerViewLeftContstraint.constant = -profileBottomVC.view.frame.width
         UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.5, delay: 0, animations: {
            
             self.horizontalScrollBar.transform = CGAffineTransform(translationX: self.horizontalScrollBar.frame.width, y: 0)
