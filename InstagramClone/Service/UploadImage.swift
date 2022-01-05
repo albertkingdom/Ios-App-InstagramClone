@@ -9,8 +9,8 @@ import Foundation
 import Alamofire
 //upload image to imgur
 struct ImgurResponseResult: Codable {
-    var data: ImgurData
-    var status: Int
+    let data: ImgurData
+    let status: Int
 }
 
 struct ImgurData: Codable {
@@ -31,8 +31,8 @@ func uploadImage(data: Data, completion: @escaping (String?, Error?)-> Void) {
             
             switch response.result {
             case .success(let result):
-                //print(result.status)
-                //print(result.data.link)
+                print("ststus...\(result.status)")
+                print(result.data.link)
                 completion(result.data.link, nil)
             case .failure(let error):
                 print(error)

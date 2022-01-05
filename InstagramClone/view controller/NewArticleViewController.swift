@@ -66,7 +66,12 @@ class NewArticleViewController: UIViewController {
         isUploading = true
         uploadImage(data: imageData ){ [weak self] (link:String?, error:Error?) in
             if let error = error {
-                fatalError(error.localizedDescription)
+                //fatalError(error.localizedDescription)
+                print("upload failed...\(error.localizedDescription)")
+                let alertC = UIAlertController(title: "Upload Failed", message: error.localizedDescription, preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                alertC.addAction(okAction)
+                self?.present(alertC, animated: true, completion: nil)
             }
             if let link = link {
                 // success

@@ -32,6 +32,7 @@
 		A171BFF62769AEA600BE75AB /* CommentListTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A171BFF52769AEA600BE75AB /* CommentListTestViewController.swift */; };
 		A188005F27664BC10014BFF0 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A188005E27664BC10014BFF0 /* TestViewController.swift */; };
 		A188006127673BDB0014BFF0 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A188006027673BDB0014BFF0 /* UpdateProfileViewController.swift */; };
+		DF14417A2785550A0038D05D /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1441792785550A0038D05D /* LocalNotification.swift */; };
 		DF80CFAB2770329700085E7B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFAA2770329600085E7B /* ProfileViewController.swift */; };
 		DF80CFAD2770369F00085E7B /* ProfileBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */; };
 		DF80CFB52771A9C500085E7B /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFB42771A9C500085E7B /* UITextFieldExtension.swift */; };
@@ -61,6 +62,7 @@
 		A171BFF52769AEA600BE75AB /* CommentListTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListTestViewController.swift; sourceTree = "<group>"; };
 		A188005E27664BC10014BFF0 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		A188006027673BDB0014BFF0 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
+		DF1441792785550A0038D05D /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		DF80CFAA2770329600085E7B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBottomViewController.swift; sourceTree = "<group>"; };
 		DF80CFB42771A9C500085E7B /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				A12B6C1F27631A6F00FE636A /* UploadImage.swift */,
+				DF1441792785550A0038D05D /* LocalNotification.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				A12B6C26276454FB00FE636A /* CommentListViewController.swift in Sources */,
 				A188005F27664BC10014BFF0 /* TestViewController.swift in Sources */,
 				DF80CFAB2770329700085E7B /* ProfileViewController.swift in Sources */,
+				DF14417A2785550A0038D05D /* LocalNotification.swift in Sources */,
 				A12B6BF22760FFF700FE636A /* ProfileViewControllerOld.swift in Sources */,
 				DF80CFAD2770369F00085E7B /* ProfileBottomViewController.swift in Sources */,
 				A12B6C092761FDB200FE636A /* Post.swift in Sources */,

@@ -20,7 +20,8 @@ class PostListViewController: UIViewController {
     var postList : [Post] = []
                                  
     var postIdList: [String] = []
-   
+    let userDefault = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("PostListViewController viewdidload")
@@ -33,7 +34,7 @@ class PostListViewController: UIViewController {
         collectionView.delegate = self
         
         
-        
+        self.tabBarController?.tabBar.barTintColor = .white
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,31 +69,48 @@ class PostListViewController: UIViewController {
                 print("Error fetching document: \(error!)")
                 return
               }
-                
+                document.documentChanges.forEach { diff in
+                    if diff.type == .added, let userEmail = diff.document.data()["userEmail"] as? String, let savedDocumentIds = self.userDefault.object(forKey: "postIds") as? [String: [String]]{
+                        //print("document diff post email \(userEmail)... id...\(diff.document.documentID)")
+                        //print("savedDocumentIds...\(savedDocumentIds[loginUserEmail!])")
+                        if let index = savedDocumentIds[loginUserEmail!]?.firstIndex(where: { id in
+                            id as! String == diff.document.documentID
+                            
+                        }) {
+                            // existing post
+                        }else {
+                            // new post, send local notification
+                            LocalNotification.sendLocalNotification(email: userEmail)
+                        }
+                        
+                        
+                    }
+                }
                 let posts = document.documents.map { QueryDocumentSnapshot -> Post  in
-                    print(QueryDocumentSnapshot.data())
+                    
                     guard let post = try? QueryDocumentSnapshot.data(as: Post.self) else {
                         fatalError("\(error?.localizedDescription)" as! String)
                     }
 
                     return post
-//                    QueryDocumentSnapshot.data()
                 }
                 
                 let postsIds = document.documents.map { QueryDocumentSnapshot -> String in
                     guard let id = try? QueryDocumentSnapshot.documentID else {
                        fatalError()
                     }
-                   
+              
                     return id
                 }
-                print("Current data: \(posts)")
+                // save document id to user default
+                self.userDefault.setValue([loginUserEmail:postsIds], forKey: "postIds")
+
                 self.postList = posts
                 self.postIdList = postsIds
                 self.collectionView.reloadData()
             }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         listener.remove()
     }
