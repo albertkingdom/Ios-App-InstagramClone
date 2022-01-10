@@ -18,8 +18,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3v-av-Bx2">
+                                <rect key="frame" x="0.0" y="44" width="375" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="0db-Gx-vP6"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="5AW-zj-Hpb" kind="embed" id="UwY-JI-OcW"/>
+                                </connections>
+                            </containerView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9Y2-Qx-hw5">
-                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="144" width="375" height="474"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lIj-Lx-6oA">
                                     <size key="itemSize" width="128" height="128"/>
@@ -43,9 +52,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Xlf-Jt-t3O" firstAttribute="trailing" secondItem="9Y2-Qx-hw5" secondAttribute="trailing" id="OQS-7I-hTm"/>
+                            <constraint firstItem="u3v-av-Bx2" firstAttribute="leading" secondItem="Xlf-Jt-t3O" secondAttribute="leading" id="Wea-Q9-T5o"/>
                             <constraint firstItem="Xlf-Jt-t3O" firstAttribute="bottom" secondItem="9Y2-Qx-hw5" secondAttribute="bottom" id="br7-Rx-OdB"/>
-                            <constraint firstItem="9Y2-Qx-hw5" firstAttribute="top" secondItem="Xlf-Jt-t3O" secondAttribute="top" id="dtC-og-RCB"/>
+                            <constraint firstItem="9Y2-Qx-hw5" firstAttribute="top" secondItem="u3v-av-Bx2" secondAttribute="bottom" id="dtC-og-RCB"/>
                             <constraint firstItem="9Y2-Qx-hw5" firstAttribute="leading" secondItem="Xlf-Jt-t3O" secondAttribute="leading" id="iag-Bw-xeN"/>
+                            <constraint firstItem="u3v-av-Bx2" firstAttribute="top" secondItem="Xlf-Jt-t3O" secondAttribute="top" id="pRV-zV-M5O"/>
+                            <constraint firstItem="Xlf-Jt-t3O" firstAttribute="trailing" secondItem="u3v-av-Bx2" secondAttribute="trailing" id="tHl-eC-f5K"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Instagram Clone" id="eRi-RU-g0W"/>
@@ -149,7 +161,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zdc-ty-fqd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3091" y="248"/>
+            <point key="canvasLocation" x="3562" y="247"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="n9f-jB-tx0">
@@ -163,7 +175,6 @@
                                 <rect key="frame" x="176" y="311" width="195" height="142"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="hear" title="Button"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u8R-9m-6rK">
                                 <rect key="frame" x="0.0" y="200" width="375" height="242"/>
@@ -184,7 +195,6 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJM-aw-Ts7">
                                 <rect key="frame" x="174" y="679" width="67" height="62"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="line.3.horizontal" catalog="system" title="Button"/>
                                 <connections>
                                     <action selector="moveButton:" destination="5xH-Y4-ebY" eventType="touchUpInside" id="ehV-jz-VpV"/>
                                 </connections>
@@ -222,7 +232,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Tg-C5-w5e">
-                                        <rect key="frame" x="0.0" y="34" width="375" height="955.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="955.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mA9-GH-UzT" userLabel="top View">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
@@ -264,12 +274,9 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9z7-hz-GAA">
-                                                        <rect key="frame" x="10" y="160.5" width="355" height="31"/>
+                                                        <rect key="frame" x="10" y="160.5" width="355" height="34"/>
                                                         <color key="tintColor" systemColor="systemBackgroundColor"/>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="Update profile">
-                                                            <color key="baseForegroundColor" systemColor="labelColor"/>
-                                                        </buttonConfiguration>
                                                         <connections>
                                                             <action selector="touchUpdateProfileButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ne4-tz-1VQ"/>
                                                         </connections>
@@ -557,6 +564,43 @@
             </objects>
             <point key="canvasLocation" x="3212" y="-758"/>
         </scene>
+        <!--Story Detail View Controller-->
+        <scene sceneID="Zb1-eJ-6ds">
+            <objects>
+                <viewController storyboardIdentifier="storyDetailVC" id="cBY-fp-ezP" customClass="StoryDetailViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GzE-sT-vCh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6nk-eC-PxU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wvh-EF-qxI">
+                                <rect key="frame" x="20" y="20" width="335" height="4"/>
+                            </progressView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mgM-FT-g0M"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mgM-FT-g0M" firstAttribute="trailing" secondItem="6nk-eC-PxU" secondAttribute="trailing" id="9ZC-K9-P19"/>
+                            <constraint firstItem="wvh-EF-qxI" firstAttribute="centerX" secondItem="GzE-sT-vCh" secondAttribute="centerX" id="BNn-OU-To3"/>
+                            <constraint firstItem="6nk-eC-PxU" firstAttribute="top" secondItem="mgM-FT-g0M" secondAttribute="top" id="TD3-hn-4ih"/>
+                            <constraint firstItem="wvh-EF-qxI" firstAttribute="top" secondItem="mgM-FT-g0M" secondAttribute="top" constant="20" id="dXp-2B-Xuv"/>
+                            <constraint firstItem="wvh-EF-qxI" firstAttribute="width" secondItem="GzE-sT-vCh" secondAttribute="width" constant="-40" id="han-si-H91"/>
+                            <constraint firstItem="6nk-eC-PxU" firstAttribute="leading" secondItem="mgM-FT-g0M" secondAttribute="leading" id="j3x-mv-mlN"/>
+                            <constraint firstItem="mgM-FT-g0M" firstAttribute="bottom" secondItem="6nk-eC-PxU" secondAttribute="bottom" id="lze-DA-aAQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="VH6-Ml-brd"/>
+                    <connections>
+                        <outlet property="imageView" destination="6nk-eC-PxU" id="sxF-7W-OXQ"/>
+                        <outlet property="progressBar" destination="wvh-EF-qxI" id="EQI-pw-HBR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mpJ-ej-zCm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3911" y="-449"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="tZt-IH-QjR">
             <objects>
@@ -803,7 +847,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aW1-2L-T0M">
-                                        <rect key="frame" x="0.0" y="100" width="375" height="1358"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1358"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fB6-pJ-eHL" userLabel="top View">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
@@ -845,12 +889,9 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aq0-wj-124">
-                                                        <rect key="frame" x="10" y="160.5" width="355" height="31"/>
+                                                        <rect key="frame" x="10" y="160.5" width="355" height="34"/>
                                                         <color key="tintColor" systemColor="systemBackgroundColor"/>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="Update profile">
-                                                            <color key="baseForegroundColor" systemColor="labelColor"/>
-                                                        </buttonConfiguration>
                                                         <connections>
                                                             <action selector="touchUpdateProfileButton:" destination="PO6-83-YPH" eventType="touchUpInside" id="AiL-Bc-oko"/>
                                                         </connections>
@@ -1120,12 +1161,9 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48l-mP-fae">
-                                                        <rect key="frame" x="10" y="160.5" width="355" height="31"/>
+                                                        <rect key="frame" x="10" y="160.5" width="355" height="34"/>
                                                         <color key="tintColor" systemColor="systemBackgroundColor"/>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="Update profile">
-                                                            <color key="baseForegroundColor" systemColor="labelColor"/>
-                                                        </buttonConfiguration>
                                                         <connections>
                                                             <action selector="touchUpdateProfileButton:" destination="bfQ-qc-DIQ" eventType="touchUpInside" id="elh-oh-gEp"/>
                                                         </connections>
@@ -1357,6 +1395,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="gQO-hZ-rCs"/>
                         <color key="backgroundColor" systemColor="systemBrownColor"/>
                         <constraints>
                             <constraint firstItem="vpK-ul-Dex" firstAttribute="leading" secondItem="De0-WG-WRQ" secondAttribute="leading" id="0Mz-rZ-X0w"/>
@@ -1373,11 +1412,42 @@
             </objects>
             <point key="canvasLocation" x="4443.1999999999998" y="-1418.1409295352325"/>
         </scene>
+        <!--Story View Controller-->
+        <scene sceneID="NWn-30-2za">
+            <objects>
+                <viewController id="5AW-zj-Hpb" customClass="StoryViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="YKh-Dq-xOn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZRB-u7-sPz">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="sy2-e3-qYU">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xfU-3Z-CMn">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                        </cells>
+                    </collectionView>
+                    <connections>
+                        <outlet property="collectionView" destination="YKh-Dq-xOn" id="12I-RE-YOq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cZp-Up-ckk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2962" y="-235"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="hear" width="128" height="128"/>
         <image name="house" catalog="system" width="128" height="106"/>
-        <image name="line.3.horizontal" catalog="system" width="128" height="64"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <image name="paperplane" catalog="system" width="128" height="118"/>
         <image name="person" width="128" height="128"/>

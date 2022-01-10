@@ -17,7 +17,13 @@ class PostListViewController: UIViewController {
     var db: Firestore!
     var listener: ListenerRegistration!
     
-    var postList : [Post] = []
+    var postList : [Post] = [] {
+        didSet {
+            if let childVC = self.children.first as? StoryViewController {
+                childVC.postData = self.postList
+            }
+        }
+    }
                                  
     var postIdList: [String] = []
     let userDefault = UserDefaults.standard
@@ -35,11 +41,12 @@ class PostListViewController: UIViewController {
         
         
         self.tabBarController?.tabBar.barTintColor = .white
+        getPost()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         print("PostListViewController viewWillAppear")
-        getPost()
+//        getPost()
     }
     private func generateLayout() -> UICollectionViewLayout {
         //let spacing: CGFloat = 20

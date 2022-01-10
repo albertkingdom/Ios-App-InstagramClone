@@ -32,6 +32,11 @@
 		A171BFF62769AEA600BE75AB /* CommentListTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A171BFF52769AEA600BE75AB /* CommentListTestViewController.swift */; };
 		A188005F27664BC10014BFF0 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A188005E27664BC10014BFF0 /* TestViewController.swift */; };
 		A188006127673BDB0014BFF0 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A188006027673BDB0014BFF0 /* UpdateProfileViewController.swift */; };
+		DF0C80112787EA4A009A2E9F /* StoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C80102787EA4A009A2E9F /* StoryViewController.swift */; };
+		DF0C80142787ED95009A2E9F /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C80122787ED95009A2E9F /* StoryCollectionViewCell.swift */; };
+		DF0C80152787ED95009A2E9F /* StoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF0C80132787ED95009A2E9F /* StoryCollectionViewCell.xib */; };
+		DF0C801727880105009A2E9F /* DownLoadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C801627880105009A2E9F /* DownLoadImage.swift */; };
+		DF0C801927882481009A2E9F /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C801827882481009A2E9F /* StoryDetailViewController.swift */; };
 		DF14417A2785550A0038D05D /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF1441792785550A0038D05D /* LocalNotification.swift */; };
 		DF80CFAB2770329700085E7B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFAA2770329600085E7B /* ProfileViewController.swift */; };
 		DF80CFAD2770369F00085E7B /* ProfileBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */; };
@@ -62,6 +67,11 @@
 		A171BFF52769AEA600BE75AB /* CommentListTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListTestViewController.swift; sourceTree = "<group>"; };
 		A188005E27664BC10014BFF0 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		A188006027673BDB0014BFF0 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
+		DF0C80102787EA4A009A2E9F /* StoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewController.swift; sourceTree = "<group>"; };
+		DF0C80122787ED95009A2E9F /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		DF0C80132787ED95009A2E9F /* StoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryCollectionViewCell.xib; sourceTree = "<group>"; };
+		DF0C801627880105009A2E9F /* DownLoadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownLoadImage.swift; sourceTree = "<group>"; };
+		DF0C801827882481009A2E9F /* StoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDetailViewController.swift; sourceTree = "<group>"; };
 		DF1441792785550A0038D05D /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		DF80CFAA2770329600085E7B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBottomViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +134,8 @@
 				A12B6C022761F41C00FE636A /* PostCollectionViewCell.swift */,
 				A12B6C032761F41C00FE636A /* PostCollectionViewCell.xib */,
 				A12B6C212763411E00FE636A /* PostInProfileCollectionViewCell.swift */,
+				DF0C80122787ED95009A2E9F /* StoryCollectionViewCell.swift */,
+				DF0C80132787ED95009A2E9F /* StoryCollectionViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -142,6 +154,7 @@
 			children = (
 				A12B6C1F27631A6F00FE636A /* UploadImage.swift */,
 				DF1441792785550A0038D05D /* LocalNotification.swift */,
+				DF0C801627880105009A2E9F /* DownLoadImage.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -160,6 +173,8 @@
 				A171BFF52769AEA600BE75AB /* CommentListTestViewController.swift */,
 				DF80CFAA2770329600085E7B /* ProfileViewController.swift */,
 				DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */,
+				DF0C80102787EA4A009A2E9F /* StoryViewController.swift */,
+				DF0C801827882481009A2E9F /* StoryDetailViewController.swift */,
 			);
 			path = "view controller";
 			sourceTree = "<group>";
@@ -236,6 +251,7 @@
 				A12B6BFA2760FFFA00FE636A /* LaunchScreen.storyboard in Resources */,
 				A12B6C0B27624EE500FE636A /* GoogleService-Info.plist in Resources */,
 				A12B6BF72760FFFA00FE636A /* Assets.xcassets in Resources */,
+				DF0C80152787ED95009A2E9F /* StoryCollectionViewCell.xib in Resources */,
 				A12B6BF52760FFF700FE636A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,6 +265,7 @@
 			files = (
 				A12B6C12276254E700FE636A /* LoginViewController.swift in Sources */,
 				A12B6C2027631A6F00FE636A /* UploadImage.swift in Sources */,
+				DF0C80142787ED95009A2E9F /* StoryCollectionViewCell.swift in Sources */,
 				A171BFF42769937C00BE75AB /* LoadingViewController.swift in Sources */,
 				A12B6C042761F41C00FE636A /* PostCollectionViewCell.swift in Sources */,
 				A12B6C072761FAFA00FE636A /* PostListViewController.swift in Sources */,
@@ -259,10 +276,13 @@
 				A12B6BF22760FFF700FE636A /* ProfileViewControllerOld.swift in Sources */,
 				DF80CFAD2770369F00085E7B /* ProfileBottomViewController.swift in Sources */,
 				A12B6C092761FDB200FE636A /* Post.swift in Sources */,
+				DF0C801927882481009A2E9F /* StoryDetailViewController.swift in Sources */,
+				DF0C80112787EA4A009A2E9F /* StoryViewController.swift in Sources */,
 				A12B6BEE2760FFF700FE636A /* AppDelegate.swift in Sources */,
 				DF80CFB52771A9C500085E7B /* UITextFieldExtension.swift in Sources */,
 				A12B6C222763411E00FE636A /* PostInProfileCollectionViewCell.swift in Sources */,
 				A12B6C2427639C4C00FE636A /* Follow.swift in Sources */,
+				DF0C801727880105009A2E9F /* DownLoadImage.swift in Sources */,
 				A171BFF62769AEA600BE75AB /* CommentListTestViewController.swift in Sources */,
 				A188006127673BDB0014BFF0 /* UpdateProfileViewController.swift in Sources */,
 				A12B6C1B276314BC00FE636A /* NewArticleViewController.swift in Sources */,
