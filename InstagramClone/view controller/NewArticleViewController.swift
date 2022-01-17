@@ -10,106 +10,68 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
+import Photos
 
 class NewArticleViewController: UIViewController {
     var db: Firestore!
     var isSelectImage = false
-    var isUploading: Bool = false {
-        didSet {
-            if (isUploading) {
+    var allPhotos: PHFetchResult<PHAsset>? = nil //photos from iphone
 
-                let loadingVC = LoadingViewController()
-                loadingVC.modalPresentationStyle = .overCurrentContext
-                //loadingVC.isModalInPresentation = true
-                present(loadingVC, animated: true, completion: nil)
-            } else {
-
-                let currentVC = presentedViewController as! LoadingViewController
-                currentVC.textLabel.text = "Complete"
-                cleanContext()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.presentedViewController?.dismiss(animated: true, completion: nil)
-                   
-                    // switch tab
-                    self.tabBarController?.selectedIndex = 0
-                }
-            }
-            
-        }
-        
-    }
-    var isCompleteUploading: Bool = false {
-        didSet {
-            if (isCompleteUploading) {
-                uploadingMaskInfo.text = "發佈成功!"
-            } else {
-                uploadingMask.isHidden = true
-                uploadingMaskView.isHidden = true
-            }
-        }
-    }
     @IBOutlet weak var postImage: UIImageView!
-    
-    @IBOutlet weak var postContent: UITextView!
-    
-    @IBAction func clickFinishButton(_ sender: Any) {
-        if !isSelectImage {
-            let alertC = UIAlertController(title: nil, message: "請選取照片！", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "好", style: .default, handler: nil)
-            alertC.addAction(okAction)
-            present(alertC, animated: true, completion: nil)
-            return
-        }
-        guard let imageData = self.postImage.image?.jpegData(compressionQuality: 0.8) else {
-            fatalError("no image")
-        }
-        isUploading = true
-        uploadImage(data: imageData ){ [weak self] (link:String?, error:Error?) in
-            if let error = error {
-                //fatalError(error.localizedDescription)
-                print("upload failed...\(error.localizedDescription)")
-                let alertC = UIAlertController(title: "Upload Failed", message: error.localizedDescription, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-                alertC.addAction(okAction)
-                self?.present(alertC, animated: true, completion: nil)
-            }
-            if let link = link {
-                // success
-                print("imgur upload link \(link)")
-                self?.uploadToFirebase(link: link)
-            }
-            
-        }
+    @IBOutlet weak var cameraButton: UIButton!
+    @IBAction func touchCameraButton() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .camera
+        self.present(imagePicker, animated: true, completion: nil)
     }
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     
     @IBAction func clickCancel(_ sender: Any) {
         tabBarController?.selectedIndex = 0
     }
-    
-    @IBOutlet weak var uploadingMask: UIView!
-    @IBOutlet weak var uploadingMaskInfo: UILabel!
-    @IBOutlet weak var uploadingMaskView: UIView!
+    @IBAction func touchNextStepButton() {
+        if isSelectImage {
+            let nextVC = storyboard?.instantiateViewController(withIdentifier: "NewArticleStep2VC") as! NewArticleStep2ViewController
+            nextVC.image = self.postImage.image
+            navigationController?.pushViewController(nextVC, animated: true)
+            
+        } else {
+            let alertC = UIAlertController(title: nil, message: "請選取照片！", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "好", style: .default, handler: nil)
+            alertC.addAction(okAction)
+            present(alertC, animated: true, completion: nil)
+        }
+       
+    }
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
+        print("NewArticleViewController viewDidLoad")
         // Do any additional setup after loading the view.
         
-        let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.pickImage))
-        postImage.addGestureRecognizer(tapGR)
-        postImage.isUserInteractionEnabled = true
-        navigationItem.rightBarButtonItem?.title = "分享"
-        // textView
-        postContent.layer.borderWidth = 1
-        postContent.layer.borderColor = UIColor.gray.cgColor
-        postContent.layer.cornerRadius = 10
+//        let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.pickImage))
+//        postImage.addGestureRecognizer(tapGR)
+//        postImage.isUserInteractionEnabled = true
+        navigationItem.rightBarButtonItem?.title = "Next"
+
         
-        //mask
-        uploadingMask.isHidden = true
-        uploadingMaskView.isHidden = true
-        uploadingMaskView.layer.cornerRadius = 10
+        
+        collectionView.setCollectionViewLayout(generateLayout(), animated: true)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        
+        // check camera availibility
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            cameraButton.isEnabled = true
+        } else {
+            cameraButton.isEnabled = false
+        }
         
     }
     @objc func imageTapped(sender: UITapGestureRecognizer) {
@@ -117,57 +79,20 @@ class NewArticleViewController: UIViewController {
             print("UIImageView tapped")
         }
     }
-    @objc func pickImage(_ sender: Any) {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        
-        let pickImageAlertController = UIAlertController(title: "插入照片", message: "選擇照片來源", preferredStyle: .actionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
-            imagePicker.sourceType = .camera
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        let albumAction = UIAlertAction(title: "Album", style: .default) { _ in
-            imagePicker.sourceType = .photoLibrary
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            pickImageAlertController.addAction(cameraAction)
-        }
-        pickImageAlertController.addAction(albumAction)
-        present(pickImageAlertController, animated: true, completion: nil)
-    }
+
     
-    
-    func uploadToFirebase(link: String) {
-        let loginUserEmail =  Auth.auth().currentUser?.email
-        let postRef = db.collection("post").document()
-        let post = Post(imageLink: link, postContent: self.postContent.text, userEmail: loginUserEmail, commentList: nil, timestamp: nil)
+    override func viewWillAppear(_ animated: Bool) {
+        //getPhotos()
+        let fetchOption = PHFetchOptions()
+        fetchOption.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        self.allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOption)
         
-        do {
-            try postRef
-                .setData(from: post)
-            isUploading = false
-           
-           
-        }catch let error {
-            
-            fatalError("Error adding document \(error)" )
-            
-            
-        }
-    }
-    
-    func cleanContext() {
-        print("cleanContext")
-        postContent.text = nil
-        isSelectImage = false
-        postImage.image = UIImage(systemName: "photo")
+
     }
     override func viewWillDisappear(_ animated: Bool) {
-       
+        postImage.image = UIImage(systemName: "photo")
     }
-    
+   
 }
 extension NewArticleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // implement methods in UIImagePickerControllerDelegate
@@ -180,5 +105,64 @@ extension NewArticleViewController: UIImagePickerControllerDelegate, UINavigatio
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension NewArticleViewController: UICollectionViewDataSource {
+    
+    
+    private func generateLayout() -> UICollectionViewLayout {
+        //let spacing: CGFloat = 20
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.5))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+       
+        //item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 0, trailing: spacing)
+        return UICollectionViewCompositionalLayout(section: section)
+        
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return allPhotos?.count ?? 0
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "multipleImageCell", for: indexPath) as! MultipleImageLoaderCollectionViewCell
+        let asset = allPhotos?.object(at: indexPath.row)
+        cell.imageView.fetchImage(asset: asset!, targetSize: cell.imageView.frame.size)
+       
+        return cell
+    }
+    
+   
+}
+extension NewArticleViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let asset = allPhotos?.object(at: indexPath.row)
+        postImage.fetchImage(asset: asset!, targetSize: postImage.frame.size)
+        isSelectImage = true
+    }
+}
+
+extension UIImageView {
+    // fetch image based on PHFetchResult
+    func fetchImage(asset: PHAsset, targetSize: CGSize) {
+        let manager = PHImageManager.default()
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = false
+        requestOptions.deliveryMode = .opportunistic
+        
+        manager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFill, options: requestOptions) { image, _ in
+            if let image = image {
+               
+                self.image = image
+            } else {
+                print("error asset to image")
+            }
+        }
+        
     }
 }

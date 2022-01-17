@@ -8,7 +8,7 @@
 import UIKit
 
 class LoadingViewController: UIViewController {
-    var loadingText: UIView = {
+    var loadingView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemBackground
@@ -24,20 +24,19 @@ class LoadingViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        //view.backgroundColor = .white
         view.alpha = 0.8
         
         
-        loadingText.addSubview(textLabel)
+        loadingView.addSubview(textLabel)
         
-        view.addSubview(loadingText)
+        view.addSubview(loadingView)
         NSLayoutConstraint.activate([
-            loadingText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loadingText.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            loadingText.heightAnchor.constraint(equalToConstant: 150),
-            loadingText.widthAnchor.constraint(equalToConstant: 150),
-            textLabel.centerXAnchor.constraint(equalTo: loadingText.centerXAnchor),
-            textLabel.centerYAnchor.constraint(equalTo: loadingText.centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 150),
+            loadingView.widthAnchor.constraint(equalToConstant: 150),
+            textLabel.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),
+            textLabel.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor),
             
         ])
         
