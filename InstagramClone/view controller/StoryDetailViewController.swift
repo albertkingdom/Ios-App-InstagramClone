@@ -10,7 +10,11 @@ import UIKit
 let TAG = "StoryDetailViewController"
 
 class StoryDetailViewController: UIViewController {
-    var postData: [Post] = []
+    var postData: [Post] = [] {
+        didSet {
+            downloadAllImages()
+        }
+    }
     var currentImageIndex: Int!
     
     var changeImageTimer: Timer?
@@ -24,7 +28,7 @@ class StoryDetailViewController: UIViewController {
 
         setupGesture()
         setupProgressView()
-        autoChangeImage()
+        //autoChangeImage()
         
     }
     func setupGesture() {
@@ -41,16 +45,16 @@ class StoryDetailViewController: UIViewController {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case .down:
-                print("swipe down")
+                //print("swipe down")
                 dismiss(animated: true, completion: nil)
                 changeImageTimer?.invalidate()
             case .left:
-                print("swipe left")
+                //print("swipe left")
                 changeImageTimer?.invalidate()
                 
-                print("timer stop")
+                //print("timer stop")
                 if currentImageIndex + 1 <= postData.count - 1 {
-                    print("before swipe index = \(currentImageIndex)")
+                    //print("before swipe index = \(currentImageIndex)")
                     //currentImageIndex += 1
                     self.doTransition(index: self.currentImageIndex) {
                         self.autoChangeImage()
@@ -93,7 +97,7 @@ class StoryDetailViewController: UIViewController {
         }
     }
     func autoChangeImage() {
-        print("autoChangeImage")
+        //print("autoChangeImage")
         
         // load the first image
         self.imageView.image = self.imagesList[self.currentImageIndex]
@@ -101,8 +105,8 @@ class StoryDetailViewController: UIViewController {
         
         // setup timer
         changeImageTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
-            print("timer start")
-            print("timer current index..\(self.currentImageIndex)")
+            //print("timer start")
+            //print("timer current index..\(self.currentImageIndex)")
             
             if self.currentImageIndex + 1 > self.postData.count - 1 {
                 timer.invalidate() //stop timer
@@ -145,4 +149,26 @@ class StoryDetailViewController: UIViewController {
         
     }
     
+    // MARK: fetch all images
+    func downloadAllImages()  {
+        let dispatchGroup = DispatchGroup()
+        for post in postData {
+            dispatchGroup.enter()
+            downloadImage(url: post.imageLink ?? "", completion: { data in
+                DispatchQueue.main.async {
+                    self.imagesList.append(UIImage(data: data)!)
+                }
+                dispatchGroup.leave()
+            })
+            dispatchGroup.wait()
+        }
+        // start change image animation after download all photos
+        dispatchGroup.notify(queue: .main) {
+            //print("StoryDetailViewController complete download all image")
+            
+            self.autoChangeImage()
+
+        }
+      
+    }
 }

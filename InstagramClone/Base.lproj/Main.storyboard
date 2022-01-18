@@ -18,17 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3v-av-Bx2">
-                                <rect key="frame" x="0.0" y="44" width="375" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="0db-Gx-vP6"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="5AW-zj-Hpb" kind="embed" id="UwY-JI-OcW"/>
-                                </connections>
-                            </containerView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9Y2-Qx-hw5">
-                                <rect key="frame" x="0.0" y="144" width="375" height="474"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lIj-Lx-6oA">
                                     <size key="itemSize" width="128" height="128"/>
@@ -52,12 +43,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Xlf-Jt-t3O" firstAttribute="trailing" secondItem="9Y2-Qx-hw5" secondAttribute="trailing" id="OQS-7I-hTm"/>
-                            <constraint firstItem="u3v-av-Bx2" firstAttribute="leading" secondItem="Xlf-Jt-t3O" secondAttribute="leading" id="Wea-Q9-T5o"/>
+                            <constraint firstItem="9Y2-Qx-hw5" firstAttribute="top" secondItem="Xlf-Jt-t3O" secondAttribute="top" id="bYe-KF-7KM"/>
                             <constraint firstItem="Xlf-Jt-t3O" firstAttribute="bottom" secondItem="9Y2-Qx-hw5" secondAttribute="bottom" id="br7-Rx-OdB"/>
-                            <constraint firstItem="9Y2-Qx-hw5" firstAttribute="top" secondItem="u3v-av-Bx2" secondAttribute="bottom" id="dtC-og-RCB"/>
                             <constraint firstItem="9Y2-Qx-hw5" firstAttribute="leading" secondItem="Xlf-Jt-t3O" secondAttribute="leading" id="iag-Bw-xeN"/>
-                            <constraint firstItem="u3v-av-Bx2" firstAttribute="top" secondItem="Xlf-Jt-t3O" secondAttribute="top" id="pRV-zV-M5O"/>
-                            <constraint firstItem="Xlf-Jt-t3O" firstAttribute="trailing" secondItem="u3v-av-Bx2" secondAttribute="trailing" id="tHl-eC-f5K"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Instagram Clone" id="eRi-RU-g0W"/>
@@ -1486,47 +1474,14 @@
             </objects>
             <point key="canvasLocation" x="4443.1999999999998" y="-1418.1409295352325"/>
         </scene>
-        <!--Story View Controller-->
-        <scene sceneID="NWn-30-2za">
-            <objects>
-                <viewController id="5AW-zj-Hpb" customClass="StoryViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="YKh-Dq-xOn">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZRB-u7-sPz">
-                            <size key="itemSize" width="128" height="128"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="sy2-e3-qYU">
-                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xfU-3Z-CMn">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionViewCellContentView>
-                            </collectionViewCell>
-                        </cells>
-                    </collectionView>
-                    <connections>
-                        <outlet property="collectionView" destination="YKh-Dq-xOn" id="12I-RE-YOq"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cZp-Up-ckk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2962" y="-235"/>
-        </scene>
     </scenes>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <image name="paperplane" catalog="system" width="128" height="118"/>
-        <image name="person" catalog="system" width="128" height="117"/>
         <image name="person" width="128" height="128"/>
+        <image name="person" catalog="system" width="128" height="117"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="person.crop.rectangle" catalog="system" width="128" height="93"/>
         <image name="photo" catalog="system" width="128" height="93"/>

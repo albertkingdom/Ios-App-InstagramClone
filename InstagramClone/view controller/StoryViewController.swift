@@ -7,6 +7,8 @@
 
 import UIKit
 
+// Not currently used
+
 class StoryViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var postData: [Post] = [Post()] {
