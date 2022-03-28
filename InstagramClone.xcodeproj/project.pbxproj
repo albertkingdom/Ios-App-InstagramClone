@@ -43,6 +43,7 @@
 		DF80CFAB2770329700085E7B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFAA2770329600085E7B /* ProfileViewController.swift */; };
 		DF80CFAD2770369F00085E7B /* ProfileBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */; };
 		DF80CFB52771A9C500085E7B /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFB42771A9C500085E7B /* UITextFieldExtension.swift */; };
+		DFA9FBDF27F05C0500632127 /* LikeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA9FBDE27F05C0500632127 /* LikeAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		DF80CFAA2770329600085E7B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBottomViewController.swift; sourceTree = "<group>"; };
 		DF80CFB42771A9C500085E7B /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
+		DFA9FBDE27F05C0500632127 /* LikeAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeAnimator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				A12B6BF82760FFFA00FE636A /* LaunchScreen.storyboard */,
 				A12B6BFB2760FFFA00FE636A /* Info.plist */,
 				DF80CFB42771A9C500085E7B /* UITextFieldExtension.swift */,
+				DFA9FBDE27F05C0500632127 /* LikeAnimator.swift */,
 			);
 			path = InstagramClone;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				DF07243227946797005874F0 /* NewArticleStep2ViewController.swift in Sources */,
 				A12B6C2427639C4C00FE636A /* Follow.swift in Sources */,
 				DF0C801727880105009A2E9F /* DownLoadImage.swift in Sources */,
+				DFA9FBDF27F05C0500632127 /* LikeAnimator.swift in Sources */,
 				A171BFF62769AEA600BE75AB /* CommentListTestViewController.swift in Sources */,
 				A188006127673BDB0014BFF0 /* UpdateProfileViewController.swift in Sources */,
 				A12B6C1B276314BC00FE636A /* NewArticleViewController.swift in Sources */,

@@ -15,10 +15,15 @@ struct Post: Codable {
     var userEmail: String?
     var commentList: [Comment]?
     @ServerTimestamp var timestamp: Timestamp?
+    var likeByUsers: [LikeBy]?
 }
 
 
 struct Comment: Codable {
     var userEmail: String?
     var commentContent: String?
+}
+
+struct LikeBy: Codable {
+    let userEmail: String
 }

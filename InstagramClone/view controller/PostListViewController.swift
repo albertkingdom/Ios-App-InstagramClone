@@ -17,10 +17,18 @@ class PostListViewController: UIViewController {
     var db: Firestore!
     var listener: ListenerRegistration!
     
-    var postList : [Post] = []
+    var postList : [Post] = [] {
+        didSet {
+            if oldValue.count == 0 {
+                // only reload all data when first time retrieving data, preventing collectionView flashing when any modified
+                collectionView.reloadData()
+            }
+        }
+    }
                                  
     var postIdList: [String] = []
     let userDefault = UserDefaults.standard
+    let currentLoginUserEmail = Auth.auth().currentUser?.email
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +45,8 @@ class PostListViewController: UIViewController {
         
         self.tabBarController?.tabBar.barTintColor = .white
         getPost()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,32 +106,18 @@ class PostListViewController: UIViewController {
        
         // Create a query against the collection.
         let postRef = db.collection("post")
-        let loginUserEmail =  Auth.auth().currentUser?.email
-        let query = postRef.whereField("userEmail", isNotEqualTo: loginUserEmail).order(by: "userEmail").order(by: "timestamp", descending: true)
+        
+        let query = postRef.whereField("userEmail", isNotEqualTo: currentLoginUserEmail).order(by: "userEmail").order(by: "timestamp", descending: true)
         listener = query
             .addSnapshotListener { documentSnapshot, error in
-               
-              guard let document = documentSnapshot else {
-                print("Error fetching document: \(error!)")
-                return
-              }
-                document.documentChanges.forEach { diff in
-                    if diff.type == .added, let userEmail = diff.document.data()["userEmail"] as? String, let savedDocumentIds = self.userDefault.object(forKey: "postIds") as? [String: [String]]{
-                        //print("document diff post email \(userEmail)... id...\(diff.document.documentID)")
-                        //print("savedDocumentIds...\(savedDocumentIds[loginUserEmail!])")
-                        if let index = savedDocumentIds[loginUserEmail!]?.firstIndex(where: { id in
-                            id as! String == diff.document.documentID
-                            
-                        }) {
-                            // existing post
-                        }else {
-                            // new post, send local notification
-                            LocalNotification.sendLocalNotification(email: userEmail)
-                        }
-                        
-                        
-                    }
+                
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
                 }
+                
+               
+                
                 let posts = document.documents.map { QueryDocumentSnapshot -> Post  in
                     
                     guard let post = try? QueryDocumentSnapshot.data(as: Post.self) else {
@@ -139,11 +135,39 @@ class PostListViewController: UIViewController {
                     return id
                 }
                 // save document id to user default
-                self.userDefault.setValue([loginUserEmail:postsIds], forKey: "postIds")
+                self.userDefault.setValue([self.currentLoginUserEmail:postsIds], forKey: "postIds")
 
                 self.postList = posts
                 self.postIdList = postsIds
-                self.collectionView.reloadData()
+                //print("will reload collection view!")
+                //self.collectionView.reloadData()
+                
+                document.documentChanges.forEach { diff in
+                    // listen for data added and send notification to user
+                    if diff.type == .added, let userEmail = diff.document.data()["userEmail"] as? String, let savedDocumentIds = self.userDefault.object(forKey: "postIds") as? [String: [String]]{
+
+                        if let index = savedDocumentIds[self.currentLoginUserEmail!]?.firstIndex(where: { id in
+                            id == diff.document.documentID
+                            
+                        }) {
+                            // existing post
+                        }else {
+                            // new post, send local notification
+                            LocalNotification.sendLocalNotification(email: userEmail)
+                        }
+                        
+                        
+                    }
+                    // listen for data modified
+                    if diff.type == .modified {
+                        
+                        let modifiedIndex = self.postIdList.firstIndex(of: diff.document.documentID)
+
+                        //print("will reload items-----\(modifiedIndex)")
+                        // only update the modified item
+                        self.collectionView.reloadItems(at: [IndexPath(item: modifiedIndex!, section: 1)])
+                    }
+                }
             }
     }
     
@@ -167,19 +191,9 @@ extension PostListViewController: UICollectionViewDelegate {
             //detailVC.imagesList = self.imagesList
             detailVC.currentImageIndex = indexPath.row
 
-
-
-
             present(detailVC, animated: true, completion: nil)
         case 1:
-            let post = postList[indexPath.row]
-            let commentList = post.commentList
-            let postId = postIdList[indexPath.row]
-            
-            let nextVC = storyboard?.instantiateViewController(withIdentifier: "commentList") as! CommentListViewController
-            nextVC.commentList = commentList
-            nextVC.postId = postId
-            navigationController?.pushViewController(nextVC, animated: true)
+            break
         default:
             break
         }
@@ -214,12 +228,12 @@ extension PostListViewController: UICollectionViewDataSource {
             
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postCollectionViewCell", for: indexPath) as! PostCollectionViewCell
-         let post = postList[indexPath.row]
-        cell.configure(with: post)
+        let post = postList[indexPath.row]
+        cell.configure(with: post, loginUserEmail: currentLoginUserEmail!)
         cell.delegate = self
         cell.index = indexPath.row
-      
-//        cell.commentButton.addTarget(self, action: #selector(navigateToCommentList), for: .touchUpInside)
+        
+
         return cell
         
     }
@@ -230,6 +244,8 @@ extension PostListViewController: UICollectionViewDataSource {
 protocol ProductListCellDelegate: AnyObject {
     func onTouchButton(from cell: PostCollectionViewCell)
     func onTouchUserName(from cell: PostCollectionViewCell)
+    func addToLike(from cell: PostCollectionViewCell)
+    func removeLike(from cell: PostCollectionViewCell)
 }
 extension PostListViewController: ProductListCellDelegate {
     
@@ -250,6 +266,47 @@ extension PostListViewController: ProductListCellDelegate {
         nextVC.email = cell.userName_one.text
         navigationController?.pushViewController(nextVC, animated: true)
     }
+    // click like button
+    func addToLike(from cell: PostCollectionViewCell) {
+        
+        let postId = postIdList[cell.index]
+        let postRef = db.collection("post").document(postId)
+        let newLikeBy: [String: Any] = ["userEmail": currentLoginUserEmail!]
+        postRef.updateData(["likeByUsers": FieldValue.arrayUnion([newLikeBy])]){ err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                //self.collectionView.reloadData()
+            }
+        }
+        
+    }
     
+    func removeLike(from cell: PostCollectionViewCell) {
+        
+       
+        let postId = postIdList[cell.index]
+        let postRef = db.collection("post").document(postId)
+        let newLikeBy: [String: Any] = ["userEmail": currentLoginUserEmail!]
+        postRef.updateData(["likeByUsers": FieldValue.arrayRemove([newLikeBy])]){ err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                //self.collectionView.reloadData()
+            }
+        }
+      
+    }
      
+}
+
+extension PostListViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view?.isDescendant(of: self.collectionView) == true {
+            return true
+        }
+        return false
+    }
 }
