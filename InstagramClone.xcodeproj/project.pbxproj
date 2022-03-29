@@ -44,6 +44,7 @@
 		DF80CFAD2770369F00085E7B /* ProfileBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */; };
 		DF80CFB52771A9C500085E7B /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFB42771A9C500085E7B /* UITextFieldExtension.swift */; };
 		DFA9FBDF27F05C0500632127 /* LikeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA9FBDE27F05C0500632127 /* LikeAnimator.swift */; };
+		DFA9FBE227F2EEA800632127 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA9FBE127F2EEA800632127 /* FirebaseService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBottomViewController.swift; sourceTree = "<group>"; };
 		DF80CFB42771A9C500085E7B /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		DFA9FBDE27F05C0500632127 /* LikeAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeAnimator.swift; sourceTree = "<group>"; };
+		DFA9FBE127F2EEA800632127 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				A12B6C1F27631A6F00FE636A /* UploadImage.swift */,
 				DF1441792785550A0038D05D /* LocalNotification.swift */,
 				DF0C801627880105009A2E9F /* DownLoadImage.swift */,
+				DFA9FBE127F2EEA800632127 /* FirebaseService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				DF0C80112787EA4A009A2E9F /* StoryViewController.swift in Sources */,
 				A12B6BEE2760FFF700FE636A /* AppDelegate.swift in Sources */,
 				DF80CFB52771A9C500085E7B /* UITextFieldExtension.swift in Sources */,
+				DFA9FBE227F2EEA800632127 /* FirebaseService.swift in Sources */,
 				A12B6C222763411E00FE636A /* PostInProfileCollectionViewCell.swift in Sources */,
 				DF07243227946797005874F0 /* NewArticleStep2ViewController.swift in Sources */,
 				A12B6C2427639C4C00FE636A /* Follow.swift in Sources */,

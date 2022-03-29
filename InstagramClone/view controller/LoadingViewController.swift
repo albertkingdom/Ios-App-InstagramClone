@@ -11,7 +11,7 @@ class LoadingViewController: UIViewController {
     var loadingView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemGray
         view.layer.cornerRadius = 30
         view.layer.masksToBounds = true
         return view

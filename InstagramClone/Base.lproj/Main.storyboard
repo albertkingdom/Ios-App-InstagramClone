@@ -545,7 +545,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2275.36231884058" y="-758.1521739130435"/>
+            <point key="canvasLocation" x="2321" y="-760"/>
         </scene>
         <!--Update Profile View Controller-->
         <scene sceneID="G6o-5Q-EKx">
@@ -1226,9 +1226,6 @@
                                                         <state key="normal" title="Update Profile">
                                                             <color key="titleColor" systemColor="labelColor"/>
                                                         </state>
-                                                        <connections>
-                                                            <action selector="touchUpdateProfileButton:" destination="bfQ-qc-DIQ" eventType="touchUpInside" id="elh-oh-gEp"/>
-                                                        </connections>
                                                     </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="y81-Gv-F9n">
                                                         <rect key="frame" x="0.0" y="350" width="375" height="50"/>
@@ -1480,8 +1477,8 @@
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <image name="paperplane" catalog="system" width="128" height="118"/>
-        <image name="person" width="128" height="128"/>
         <image name="person" catalog="system" width="128" height="117"/>
+        <image name="person" width="128" height="128"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="person.crop.rectangle" catalog="system" width="128" height="93"/>
         <image name="photo" catalog="system" width="128" height="93"/>

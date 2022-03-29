@@ -11,19 +11,23 @@ import FirebaseFirestoreSwift
 import FirebaseAuth
 
 class ProfileViewController: UIViewController {
-    var db: Firestore!
+    
     var singleUserPostIdList: [String] = []
     var singleUserPostList: [Post] = []
     var followingUserList: [String] = []
     var othersfollowingUserList: [String] = []
     var email: String?
     var profileBottomVC: ProfileBottomViewController!
+    lazy var firebaseService: FirebaseService = {
+        return FirebaseService()
+    }()
     @IBOutlet weak var containerViewLeftContstraint: NSLayoutConstraint!
     @IBOutlet weak var horizontalScrollBar: UIView!
     @IBOutlet weak var postCount: UILabel!
     @IBOutlet weak var followingCount: UILabel!
-    
+
     @IBOutlet weak var fansCount: UILabel!
+
     @IBAction func clickButtonOne(_ sender: Any) {
 
         containerViewLeftContstraint.constant = 0
@@ -67,14 +71,10 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet weak var updateProfileButton: UIButton!
     
-    @IBAction func touchUpdateProfileButton(_ sender: Any) {
-        let nextVC = storyboard?.instantiateViewController(withIdentifier: "updateProfilePage") as! UpdateProfileViewController
-        self.navigationController?.pushViewController(nextVC, animated: true)
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        db = Firestore.firestore()
+        
 
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         profileImageView.layer.masksToBounds = true
@@ -82,10 +82,6 @@ class ProfileViewController: UIViewController {
         updateProfileButton.layer.cornerRadius = 3
         updateProfileButton.layer.borderColor = UIColor.systemGray.cgColor
         
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .plain, target: self, action:  #selector(clickProfileMenu(_:)))
-//        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "line.3.horizontal")
-        //UIBarButtonItem(title: "add", style: .plain, target: self, action: #selector(clickProfileMenu(_:)))
-//        profileName.text = Auth.auth().currentUser?.email
        
 
         if let email = email {
@@ -94,7 +90,9 @@ class ProfileViewController: UIViewController {
             getFollowingUser(email: email)
             getFans(email: email)
             profileName.text = email
-
+            navigationItem.rightBarButtonItem = nil
+           
+            checkLoginUserIsFollowingThisUser(email: email)
         } else {
             // viewing login user profile
             let loginUserEmail =  Auth.auth().currentUser?.email
@@ -102,13 +100,35 @@ class ProfileViewController: UIViewController {
             getFollowingUser(email: loginUserEmail)
             getFans(email: loginUserEmail)
             profileName.text = loginUserEmail
-            
+            updateProfileButton.addTarget(self, action: #selector(updateProfile), for: .touchUpInside)
+            updateProfileButton.setTitle("Update Profile", for: .normal)
         }
+    }
+    @objc func startFollowingUser(){
+        firebaseService.startFollowingUser(email: email)
+    }
+    @objc func quitFollowingUser() {
+        firebaseService.quitFollowingUser(email: email)
+    }
+    @objc func updateProfile(){
+      
+        let updateProfileVC = storyboard?.instantiateViewController(withIdentifier: "updateProfilePage") as! UpdateProfileViewController
+        navigationController?.pushViewController(updateProfileVC, animated: true)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         if let profilePhotoUrl = Auth.auth().currentUser?.photoURL {
             print("profilePhotoUrl..\(profilePhotoUrl)")
-            downloadImage(url: profilePhotoUrl)
+            downloadImage(url: profilePhotoUrl.absoluteString) { imageData in
+                DispatchQueue.main.async {
+                    if let email = self.email {
+                        // for viewing other user profile
+                    } else {
+                        // viewing login user profile
+                        self.profileImageView.image = UIImage(data: imageData)
+                    }
+                }
+            }
         }
     }
     
@@ -141,98 +161,26 @@ extension ProfileViewController: UICollectionViewDataSource {
     
     func getSingleUserPost(email: String?) {
         
-        let postRef = db.collection("post")
-        
-        guard let email = email else {
-            fatalError()
-        }
-        let query = postRef.whereField("userEmail", isEqualTo: email).order(by: "timestamp", descending: true)
-        
-        query.addSnapshotListener { documentSnapshot, error in
-            guard let document = documentSnapshot else {
-                print("Error fetching document: \(error!)")
-                return
-            }
-            
-            document.documents.forEach { item in
-                print("value.document...\(item.documentID)")
-            }
-            let tempIdList = document.documents.map {
-                $0.documentID
-            }
-            self.singleUserPostIdList = tempIdList
-            
-            let tempPostList = document.documents.map { QueryDocumentSnapshot -> Post in
-                
-                
-                guard let post = try? QueryDocumentSnapshot.data(as: Post.self) else { fatalError() }
-                print(post)
-                
-                
-                
-                
-                return post
-                
-            }
-            //                print("Current data: \(tempPostList)")
+        firebaseService.getSingleUserPost(email: email) { tempIdList, tempPostList in
             self.singleUserPostList = tempPostList
             self.profileBottomVC.singleUserPostList = tempPostList
             self.postCount.text = "\(String(self.singleUserPostList.count))\n 文章"
             
             self.profileBottomVC.collectionView.reloadData()
-            
         }
-        
     }
     
-    func downloadImage(url: URL) {
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            
-            DispatchQueue.main.async { /// execute on main thread
-                if let email = self.email {
-                    // for viewing other user profile
-                } else {
-                    // viewing login user profile
-                    self.profileImageView.image = UIImage(data: data)
-                }
-            }
-        }
-        
-        task.resume()
-        
-    }
+
     func getFollowingUser(email: String?) {
         let loginUserEmail = Auth.auth().currentUser?.email
-        guard let email = email else { return }
-        let userListRef = db.collection("userList").document(email)
-        
-        
-        userListRef.getDocument{ documentSnapshot, error in
-            
-            
-            let followList = documentSnapshot.map{ documentSnapshot -> [String] in
-                
-                guard let follow = try? documentSnapshot.data(as: Follow.self)?.followingUserEmail else { fatalError() }
-                //print(follow)
-                return follow
-                
-            }
-            
-            print("followlist..\(followList)")
-            
-            
-            
-            
-            if let followList = followList {
-                if email == loginUserEmail {
-                    self.followingUserList = followList
-                    self.followingCount.text = "\( self.followingUserList.count)\n 追蹤"
-                } else {
-                    self.othersfollowingUserList = followList
-                    self.followingCount.text = "\( self.othersfollowingUserList.count)\n 追蹤"
-                }
+
+        firebaseService.getFollowingUser(email: email) { followList in
+            if email == loginUserEmail {
+                self.followingUserList = followList
+                self.followingCount.text = "\( self.followingUserList.count)\n 追蹤"
+            } else {
+                self.othersfollowingUserList = followList
+                self.followingCount.text = "\( self.othersfollowingUserList.count)\n 追蹤"
             }
         }
         
@@ -241,26 +189,23 @@ extension ProfileViewController: UICollectionViewDataSource {
     
     func getFans(email: String?) {
         
-        let loginUserEmail = Auth.auth().currentUser?.email
-       
-        guard let email = email else { return }
-
-        let query = db.collection("userList").whereField("followingUserEmail", arrayContains: email)
-            query.addSnapshotListener { value, e in
-            if (e != nil) {
-                print("Listen failed.\(e)")
-               return
-            }
-            if value != nil, let fansCount = value?.documents.count {
-                print("get fans...\(fansCount)")
-                self.fansCount.text = "\(fansCount) \n 粉絲"
-            }
-
+        firebaseService.getFans(email: email) { fansCount in
+            self.fansCount.text = "\(fansCount) \n 粉絲"
         }
 
-
     }
-    
+    func checkLoginUserIsFollowingThisUser(email: String?) {
+
+        firebaseService.checkLoginUserIsFollowingThisUser(email: email) { loginUserIsFollowingThisUser in
+            if loginUserIsFollowingThisUser {
+                self.updateProfileButton.setTitle("追蹤中", for: .normal)
+                self.updateProfileButton.addTarget(self, action: #selector(self.quitFollowingUser), for: .touchUpInside)
+            } else {
+                self.updateProfileButton.setTitle("追蹤", for: .normal)
+                self.updateProfileButton.addTarget(self, action: #selector(self.startFollowingUser), for: .touchUpInside)
+            }
+        }
+    }
     // MARK: prepare for container view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
