@@ -11,7 +11,7 @@ class LoadingViewController: UIViewController {
     var loadingView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray
+        view.backgroundColor = .systemGray3
         view.layer.cornerRadius = 30
         view.layer.masksToBounds = true
         return view
@@ -20,6 +20,7 @@ class LoadingViewController: UIViewController {
        let textLabel = UILabel()
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         textLabel.text = "Uploading..."
+        textLabel.textColor = .white
         return textLabel
     }()
     override func viewDidLoad() {

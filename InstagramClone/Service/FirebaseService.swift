@@ -11,9 +11,10 @@ import FirebaseFirestoreSwift
 import FirebaseAuth
 
 class FirebaseService {
-//    let loginUserEmail = Auth.auth().currentUser?.email
+    let currentLoginUserEmail = Auth.auth().currentUser?.email
     let db = Firestore.firestore()
     
+    // MARK: profileVC
     func getFollowingUser(email: String?, complete: @escaping ([String]) -> Void){
         guard let email = email else { return }
         let userListRef = db.collection("userList").document(email)
@@ -123,5 +124,72 @@ class FirebaseService {
         db.collection("userList").document(loginUserEmail).updateData([
             "followingUserEmail": FieldValue.arrayRemove([email])
         ])
+    }
+    
+    // MARK: postListVC
+    func addToLike(postId: String) {
+        
+        let postRef = db.collection("post").document(postId)
+        let newLikeBy: [String: Any] = ["userEmail": currentLoginUserEmail!]
+        postRef.updateData(["likeByUsers": FieldValue.arrayUnion([newLikeBy])]){ err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                //self.collectionView.reloadData()
+            }
+        }
+        
+    }
+    
+    func removeLike(postId: String) {
+        let postRef = db.collection("post").document(postId)
+        let newLikeBy: [String: Any] = ["userEmail": currentLoginUserEmail!]
+        postRef.updateData(["likeByUsers": FieldValue.arrayRemove([newLikeBy])]){ err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                //self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    // MARK: CommentListVC
+    func addComment(commentContent: String, postId: String, complete: @escaping () -> Void) {
+        let postRef = db.collection("post").document(postId)
+
+        let newComment: [String: Any] = ["userEmail": currentLoginUserEmail, "commentContent": commentContent]
+        print("newComment..\(newComment)")
+        
+        postRef.updateData([
+            "commentList": FieldValue.arrayUnion([newComment])
+        ]){ err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                complete()
+            }
+        }
+    }
+    
+    // MARK: NewArticle Step2 VC
+    func uploadNewPost(post: Post, complete: @escaping (_ error: Error?) -> Void) {
+        let postRef = db.collection("post").document()
+        
+        do {
+            try postRef
+                .setData(from: post)
+            complete(nil)
+            
+            
+        }catch let error {
+            
+            print("Error adding document \(error)" )
+            complete(error)
+            
+        }
+        
     }
 }

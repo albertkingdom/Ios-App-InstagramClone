@@ -92,7 +92,7 @@ class PostCollectionViewCell: UICollectionViewCell {
     }
     
     @IBAction func clickCommentButton(_ sender: Any) {
-        self.delegate?.onTouchButton(from: self)
+        self.delegate?.onTouchCommentButton(from: self)
     }
     func configure(with data: Post, loginUserEmail: String){
         userName_one.text = data.userEmail

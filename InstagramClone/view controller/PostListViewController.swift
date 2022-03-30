@@ -14,6 +14,9 @@ import FirebaseAuth
 class PostListViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    lazy var firebaseService = {
+        return FirebaseService()
+    }()
     var db: Firestore!
     var listener: ListenerRegistration!
     
@@ -32,7 +35,7 @@ class PostListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print("PostListViewController viewdidload")
+        print("PostListViewController viewdidload")
         db = Firestore.firestore()
         
         collectionView.setCollectionViewLayout(generateLayout(), animated: true)
@@ -44,14 +47,14 @@ class PostListViewController: UIViewController {
         
         
         self.tabBarController?.tabBar.barTintColor = .white
-        getPost()
+        
         
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //print("PostListViewController viewWillAppear")
-
+        print("PostListViewController viewWillAppear")
+        getPost()
     }
 
     private func generateLayout() -> UICollectionViewLayout {
@@ -163,7 +166,7 @@ class PostListViewController: UIViewController {
                         
                         let modifiedIndex = self.postIdList.firstIndex(of: diff.document.documentID)
 
-                        //print("will reload items-----\(modifiedIndex)")
+                        print("will reload items-----\(modifiedIndex)")
                         // only update the modified item
                         self.collectionView.reloadItems(at: [IndexPath(item: modifiedIndex!, section: 1)])
                     }
@@ -242,7 +245,7 @@ extension PostListViewController: UICollectionViewDataSource {
 }
 
 protocol ProductListCellDelegate: AnyObject {
-    func onTouchButton(from cell: PostCollectionViewCell)
+    func onTouchCommentButton(from cell: PostCollectionViewCell)
     func onTouchUserName(from cell: PostCollectionViewCell)
     func addToLike(from cell: PostCollectionViewCell)
     func removeLike(from cell: PostCollectionViewCell)
@@ -250,7 +253,7 @@ protocol ProductListCellDelegate: AnyObject {
 extension PostListViewController: ProductListCellDelegate {
     
     
-    func onTouchButton(from cell: PostCollectionViewCell) {
+    func onTouchCommentButton(from cell: PostCollectionViewCell) {
         let post = postList[cell.index]
         let commentList = post.commentList
         let postId = postIdList[cell.index]
@@ -270,33 +273,16 @@ extension PostListViewController: ProductListCellDelegate {
     func addToLike(from cell: PostCollectionViewCell) {
         
         let postId = postIdList[cell.index]
-        let postRef = db.collection("post").document(postId)
-        let newLikeBy: [String: Any] = ["userEmail": currentLoginUserEmail!]
-        postRef.updateData(["likeByUsers": FieldValue.arrayUnion([newLikeBy])]){ err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-                //self.collectionView.reloadData()
-            }
-        }
         
+        firebaseService.addToLike(postId: postId)
     }
     
     func removeLike(from cell: PostCollectionViewCell) {
         
        
         let postId = postIdList[cell.index]
-        let postRef = db.collection("post").document(postId)
-        let newLikeBy: [String: Any] = ["userEmail": currentLoginUserEmail!]
-        postRef.updateData(["likeByUsers": FieldValue.arrayRemove([newLikeBy])]){ err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-                //self.collectionView.reloadData()
-            }
-        }
+       
+        firebaseService.removeLike(postId: postId)
       
     }
      

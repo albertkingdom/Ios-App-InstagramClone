@@ -24,7 +24,7 @@ class UpdateProfileViewController: UIViewController {
         profileImage.clipsToBounds = true
         
         if let profilePhotoUrl = Auth.auth().currentUser?.photoURL{
-        downloadImage(url: profilePhotoUrl)
+            downloadAvatorImage(url: profilePhotoUrl)
         } else {
             profileImage.image = UIImage(systemName: "person.circle")
         }
@@ -100,20 +100,15 @@ class UpdateProfileViewController: UIViewController {
         
     }
     
-    func downloadImage(url: URL) {
+    func downloadAvatorImage(url: URL) {
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            
-            DispatchQueue.main.async { /// execute on main thread
+        downloadImage(url: url.absoluteString) { imageData in
+            DispatchQueue.main.async {
                 if self.isLogin != nil{
-                    self.profileImage.image = UIImage(data: data)
+                    self.profileImage.image = UIImage(data: imageData)
                 }
             }
         }
-        
-        task.resume()
-        
     }
     
     

@@ -15,6 +15,9 @@ class NewArticleStep2ViewController: UIViewController {
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postContent: UITextView!
     @IBOutlet weak var finishButton: UIButton!
+    lazy var firebaseService = {
+        return FirebaseService()
+    }()
     var db: Firestore!
     var image: UIImage? = nil
     var isUploading: Bool = false {
@@ -91,17 +94,13 @@ class NewArticleStep2ViewController: UIViewController {
         let postRef = db.collection("post").document()
         let post = Post(imageLink: link, postContent: self.postContent.text, userEmail: loginUserEmail, commentList: nil, timestamp: nil)
         
-        do {
-            try postRef
-                .setData(from: post)
-            isUploading = false
-                        
-           
-        }catch let error {
-            
-            fatalError("Error adding document \(error)" )
-            
-            
+
+        firebaseService.uploadNewPost(post: post) { error in
+            if let error = error {
+                //alert
+            } else {
+                self.isUploading = false
+            }
         }
     }
     

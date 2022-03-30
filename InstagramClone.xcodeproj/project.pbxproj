@@ -29,7 +29,6 @@
 		A12B6C2427639C4C00FE636A /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B6C2327639C4C00FE636A /* Follow.swift */; };
 		A12B6C26276454FB00FE636A /* CommentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B6C25276454FB00FE636A /* CommentListViewController.swift */; };
 		A171BFF42769937C00BE75AB /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A171BFF32769937C00BE75AB /* LoadingViewController.swift */; };
-		A171BFF62769AEA600BE75AB /* CommentListTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A171BFF52769AEA600BE75AB /* CommentListTestViewController.swift */; };
 		A188005F27664BC10014BFF0 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A188005E27664BC10014BFF0 /* TestViewController.swift */; };
 		A188006127673BDB0014BFF0 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A188006027673BDB0014BFF0 /* UpdateProfileViewController.swift */; };
 		DF0724302794412B005874F0 /* MultipleImageLoaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF07242F2794412B005874F0 /* MultipleImageLoaderCollectionViewCell.swift */; };
@@ -68,7 +67,6 @@
 		A12B6C2327639C4C00FE636A /* Follow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
 		A12B6C25276454FB00FE636A /* CommentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListViewController.swift; sourceTree = "<group>"; };
 		A171BFF32769937C00BE75AB /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
-		A171BFF52769AEA600BE75AB /* CommentListTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentListTestViewController.swift; sourceTree = "<group>"; };
 		A188005E27664BC10014BFF0 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		A188006027673BDB0014BFF0 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		DF07242F2794412B005874F0 /* MultipleImageLoaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleImageLoaderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 				A188006027673BDB0014BFF0 /* UpdateProfileViewController.swift */,
 				A12B6C062761FAFA00FE636A /* PostListViewController.swift */,
 				A171BFF32769937C00BE75AB /* LoadingViewController.swift */,
-				A171BFF52769AEA600BE75AB /* CommentListTestViewController.swift */,
 				DF80CFAA2770329600085E7B /* ProfileViewController.swift */,
 				DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */,
 				DF0C80102787EA4A009A2E9F /* StoryViewController.swift */,
@@ -299,7 +296,6 @@
 				A12B6C2427639C4C00FE636A /* Follow.swift in Sources */,
 				DF0C801727880105009A2E9F /* DownLoadImage.swift in Sources */,
 				DFA9FBDF27F05C0500632127 /* LikeAnimator.swift in Sources */,
-				A171BFF62769AEA600BE75AB /* CommentListTestViewController.swift in Sources */,
 				A188006127673BDB0014BFF0 /* UpdateProfileViewController.swift in Sources */,
 				A12B6C1B276314BC00FE636A /* NewArticleViewController.swift in Sources */,
 				A12B6BF02760FFF700FE636A /* SceneDelegate.swift in Sources */,

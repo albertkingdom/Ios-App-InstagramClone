@@ -16,6 +16,9 @@ class CommentListViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var newCommentTextView: UITextField!
+    lazy var firebaseService = {
+        return FirebaseService()
+    }()
     var commentList: [Comment]? = []
     var postId: String!
     var db: Firestore!
@@ -37,10 +40,7 @@ class CommentListViewController: UIViewController {
         profileImageView.clipsToBounds = true
         
         
-        if let profilePhotoUrl = Auth.auth().currentUser?.photoURL {
-            print("profilePhotoUrl..\(profilePhotoUrl)")
-            downloadImage(url: profilePhotoUrl)
-        }
+        downloadAvatorImage()
         
         // keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -52,35 +52,21 @@ class CommentListViewController: UIViewController {
     
     func addComment(commentContent: String) {
  
-
-        let postRef = db.collection("post").document(postId)
-//        let newComment = Comment(userEmail: Auth.auth().currentUser?.email, commentContent: commentContent)
-        let newComment: [String: Any] = ["userEmail": Auth.auth().currentUser?.email, "commentContent": commentContent]
-      print("newComment..\(newComment)")
-        postRef.updateData([
-            "commentList": FieldValue.arrayUnion([newComment])
-        ]){ err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-                self.navigationController?.popViewController(animated: true)
-            }
+        firebaseService.addComment(commentContent: commentContent, postId: postId) {
+            self.navigationController?.popViewController(animated: true)
         }
             
     }
-    func downloadImage(url: URL) {
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
+    func downloadAvatorImage() {
+        if let profilePhotoUrl = Auth.auth().currentUser?.photoURL {
+            print("profilePhotoUrl..\(profilePhotoUrl)")
             
-            DispatchQueue.main.async { /// execute on main thread
-                self.profileImageView.image = UIImage(data: data)
+            downloadImage(url: profilePhotoUrl.absoluteString) { imageData in
+                DispatchQueue.main.async {
+                    self.profileImageView.image = UIImage(data: imageData)
+                }
             }
         }
-        
-        task.resume()
-        
     }
 
 }
