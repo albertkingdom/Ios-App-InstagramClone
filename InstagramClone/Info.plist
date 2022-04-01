@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb387053483253015</string>
+            </array>
+        </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>387053483253015</string>
+    <key>FacebookClientToken</key>
+    <string>5d29bb69ce140fc76d0a635012d56108</string>
+    <key>FacebookDisplayName</key>
+    <string>Instagram clone</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-share-api</string>
+    </array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>此app要取用裝置中的照片</string>
 	<key>NSCameraUsageDescription</key>
@@ -24,6 +44,6 @@
 				</dict>
 			</array>
 		</dict>
-	</dict>
+    </dict>
 </dict>
 </plist>

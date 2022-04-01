@@ -42,6 +42,8 @@
 		DF80CFAB2770329700085E7B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFAA2770329600085E7B /* ProfileViewController.swift */; };
 		DF80CFAD2770369F00085E7B /* ProfileBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFAC2770369F00085E7B /* ProfileBottomViewController.swift */; };
 		DF80CFB52771A9C500085E7B /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF80CFB42771A9C500085E7B /* UITextFieldExtension.swift */; };
+		DFA57BDD27F55C7B00456264 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = DFA57BDC27F55C7B00456264 /* FacebookCore */; };
+		DFA57BDF27F55C7B00456264 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = DFA57BDE27F55C7B00456264 /* FacebookLogin */; };
 		DFA9FBDF27F05C0500632127 /* LikeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA9FBDE27F05C0500632127 /* LikeAnimator.swift */; };
 		DFA9FBE227F2EEA800632127 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA9FBE127F2EEA800632127 /* FirebaseService.swift */; };
 /* End PBXBuildFile section */
@@ -90,6 +92,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A12B6C192762F44200FE636A /* FirebaseFirestoreSwift-Beta in Frameworks */,
+				DFA57BDD27F55C7B00456264 /* FacebookCore in Frameworks */,
+				DFA57BDF27F55C7B00456264 /* FacebookLogin in Frameworks */,
 				A12B6C1E27631A4100FE636A /* Alamofire in Frameworks */,
 				A12B6C152762F44200FE636A /* FirebaseAuth in Frameworks */,
 				A12B6C172762F44200FE636A /* FirebaseFirestore in Frameworks */,
@@ -209,6 +213,8 @@
 				A12B6C162762F44200FE636A /* FirebaseFirestore */,
 				A12B6C182762F44200FE636A /* FirebaseFirestoreSwift-Beta */,
 				A12B6C1D27631A4100FE636A /* Alamofire */,
+				DFA57BDC27F55C7B00456264 /* FacebookCore */,
+				DFA57BDE27F55C7B00456264 /* FacebookLogin */,
 			);
 			productName = InstagramClone;
 			productReference = A12B6BEA2760FFF700FE636A /* InstagramClone.app */;
@@ -241,6 +247,7 @@
 			packageReferences = (
 				A12B6C132762F44200FE636A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				A12B6C1C27631A4100FE636A /* XCRemoteSwiftPackageReference "Alamofire" */,
+				DFA57BDB27F55C7A00456264 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = A12B6BEB2760FFF700FE636A /* Products */;
 			projectDirPath = "";
@@ -536,6 +543,14 @@
 				kind = branch;
 			};
 		};
+		DFA57BDB27F55C7A00456264 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -558,6 +573,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A12B6C1C27631A4100FE636A /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		DFA57BDC27F55C7B00456264 /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DFA57BDB27F55C7A00456264 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		DFA57BDE27F55C7B00456264 /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DFA57BDB27F55C7A00456264 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

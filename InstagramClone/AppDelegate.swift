@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import UserNotifications
+import FacebookCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -22,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         registerForPushNotification()
         // foreground notification
         UNUserNotificationCenter.current().delegate = self
+        // setup for fb login
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
 

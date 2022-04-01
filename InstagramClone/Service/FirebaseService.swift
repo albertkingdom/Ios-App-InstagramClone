@@ -25,7 +25,7 @@ class FirebaseService {
             
             let followList = documentSnapshot.map{ documentSnapshot -> [String] in
                 
-                guard let follow = try? documentSnapshot.data(as: Follow.self)?.followingUserEmail else { fatalError() }
+                guard let follow = try? documentSnapshot.data(as: Follow.self)?.followingUserEmail else { return [] }
                 //print(follow)
                 return follow
                 

@@ -9,6 +9,7 @@ import UIKit
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseAuth
+import FacebookLogin
 
 class ProfileViewController: UIViewController {
     
@@ -53,14 +54,11 @@ class ProfileViewController: UIViewController {
         let signOutAction = UIAlertAction(title: "登出", style: .default) { _ in
             self.signOut()
         }
-        let updateProfileAction = UIAlertAction(title: "update profile", style: .default) { _ in
-            
-        }
+        
         let dimissAction = UIAlertAction(title: "Cancel", style: .default) { _ in
             profilMenuController.dismiss(animated: true, completion: nil)
         }
         profilMenuController.addAction(signOutAction)
-        profilMenuController.addAction(updateProfileAction)
         profilMenuController.addAction(dimissAction)
         present(profilMenuController, animated: true, completion: nil)
     }
@@ -133,8 +131,15 @@ class ProfileViewController: UIViewController {
     }
     
     func signOut() {
-        try? Auth.auth().signOut()
-        //performSegue(withIdentifier: "toLogin", sender: nil)
+
+        do {
+            try Auth.auth().signOut()
+            LoginManager().logOut() // log out fb
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+        
+
         view.window?.rootViewController?.presentedViewController?.dismiss(animated: false)
         
     }
