@@ -138,7 +138,9 @@ class PostListViewController: UIViewController {
                     return id
                 }
                 // save document id to user default
-                self.userDefault.setValue([self.currentLoginUserEmail:postsIds], forKey: "postIds")
+                if let emailAddress = self.currentLoginUserEmail {
+                    self.userDefault.setValue([emailAddress:postsIds], forKey: "postIds")
+                }
 
                 self.postList = posts
                 self.postIdList = postsIds

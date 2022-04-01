@@ -30,19 +30,15 @@ class LoginViewController: UIViewController {
         print("LoginViewController viewDidLoad")
         passwordInput.textContentType = .password
         handle = Auth.auth().addStateDidChangeListener { auth, user in
-            if let user = user {
+            if let user = user, let email = user.email {
               // The user's ID, unique to the Firebase project.
               // Do NOT use this value to authenticate with your backend server,
               // if you have one. Use getTokenWithCompletion:completion: instead.
                 
-                let email = user.email
                 let photoURL = user.photoURL
                 
                 print("user \(email)")
-                
-                
-                
-                //self.present(controller, animated: true, completion: nil)
+
                 self.performSegue(withIdentifier: "toTabBar", sender: nil)
             }
         }
@@ -135,7 +131,7 @@ extension LoginViewController: LoginButtonDelegate {
             if let error = error {
                 print("fb auth error..\(error)")
             }
-            print("fb auth result...\(authResult)")
+            print("fb email \(authResult?.user.email)")
             self.performSegue(withIdentifier: "toTabBar", sender: nil)
         }
     }

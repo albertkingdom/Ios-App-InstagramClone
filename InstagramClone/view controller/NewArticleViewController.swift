@@ -15,7 +15,7 @@ import Photos
 class NewArticleViewController: UIViewController {
     var db: Firestore!
     var isSelectImage = false
-    var allPhotos: PHFetchResult<PHAsset>? = nil //photos from iphone
+    var allPhotos: PHFetchResult<PHAsset>? //photos from iphone
 
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var cameraButton: UIButton!
@@ -83,16 +83,34 @@ class NewArticleViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         //getPhotos()
-        let fetchOption = PHFetchOptions()
-        fetchOption.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        self.allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOption)
         
-
+//        let fetchOption = PHFetchOptions()
+//        fetchOption.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+//        self.allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOption)
+//        collectionView.reloadData()
+        requestAuthorization {
+            self.fetchPhotos()
+        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         postImage.image = UIImage(systemName: "photo")
     }
-   
+    func fetchPhotos() {
+        let fetchOption = PHFetchOptions()
+        fetchOption.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        self.allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOption)
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+        
+    }
+    func requestAuthorization(completion: @escaping () -> Void) {
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+            if status == .authorized || status == .limited {
+                completion()
+            }
+        }
+    }
 }
 extension NewArticleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // implement methods in UIImagePickerControllerDelegate
