@@ -35,6 +35,7 @@ class PostCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var likeHeartWidth: NSLayoutConstraint!
     @IBOutlet weak var likeCountLabel: UILabel!
     var index: Int!
+    var task: URLSessionDataTask!
     lazy var likeAnimator = LikeAnimator(image: heartAnimateImage)
     var likeCount: Int = 0 {
         didSet {
@@ -99,7 +100,11 @@ class PostCollectionViewCell: UICollectionViewCell {
         userName_two.text = data.userEmail
         postContent.text = data.postContent ?? ""
         if let imageLink = data.imageLink {
-            downloadImage(url: imageLink)
+            downloadImage(url: imageLink) { image in
+                DispatchQueue.main.async { /// execute on main thread
+                    self.postImage.image = image
+                }
+            }
         }
         self.loginUserEmail = loginUserEmail
         // configure heart button
@@ -118,14 +123,14 @@ class PostCollectionViewCell: UICollectionViewCell {
             likeCount = likeByUserList.count
         }
     }
-    func downloadImage(url: String) {
+    func downloadImage(url: String, completion: @escaping (UIImage) -> Void) {
         if let url = URL(string: url) {
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                guard let data = data, error == nil else { return }
-                
-                DispatchQueue.main.async { /// execute on main thread
-                    self.postImage.image = UIImage(data: data)
-                }
+            task = URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data,
+                      error == nil,
+                      let image = UIImage(data: data) else { return }
+                completion(image)
+               
             }
             
             task.resume()
@@ -139,6 +144,8 @@ class PostCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         self.postImage.image = nil
         self.isLike = false
+        task.cancel() // cancel download image task when cell is reused, preventing image appear in wrong position
+        task = nil
     }
     
     

@@ -10,17 +10,27 @@ import UIKit
 let TAG = "StoryDetailViewController"
 
 class StoryDetailViewController: UIViewController {
-    var postData: [Post] = [] {
+    var postData: [Post] = []
+    var currentImageIndex: Int! {
+        
         didSet {
-            downloadAllImages()
+            downloadSelectedImages()
         }
     }
-    var currentImageIndex: Int!
     
     var changeImageTimer: Timer?
    
-    var imagesList: [UIImage] = []
-    
+    //var imagesList: [UIImage] = []
+    var currentImage: UIImage! {
+        didSet {
+            if oldValue == nil {
+                print("currentImage old value is nil")
+                // load the image at first time complete download image
+                self.imageView.image = currentImage
+                
+            }
+        }
+    }
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var progressBar: UIProgressView!
     override func viewDidLoad() {
@@ -28,8 +38,7 @@ class StoryDetailViewController: UIViewController {
 
         setupGesture()
         setupProgressView()
-        //autoChangeImage()
-        
+
     }
     func setupGesture() {
         let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
@@ -54,12 +63,8 @@ class StoryDetailViewController: UIViewController {
                 
                 //print("timer stop")
                 if currentImageIndex + 1 <= postData.count - 1 {
-                    //print("before swipe index = \(currentImageIndex)")
-                    //currentImageIndex += 1
-                    self.doTransition(index: self.currentImageIndex) {
-                        self.autoChangeImage()
-                    }
 
+                    currentImageIndex += 1
                 }else {
                     dismiss(animated: true, completion: nil)
                     changeImageTimer?.invalidate()
@@ -100,11 +105,12 @@ class StoryDetailViewController: UIViewController {
         //print("autoChangeImage")
         
         // load the first image
-        self.imageView.image = self.imagesList[self.currentImageIndex]
+        //self.imageView.image = self.currentImage
+    
         setupProgressBarAnimation()
         
         // setup timer
-        changeImageTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
+        changeImageTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
             //print("timer start")
             //print("timer current index..\(self.currentImageIndex)")
             
@@ -115,7 +121,7 @@ class StoryDetailViewController: UIViewController {
             }
             
             // MARK: image transition
-            self.doTransition(index: self.currentImageIndex, completion: nil)
+            self.doTransition(index: self.currentImageIndex)
             
             //-----------
             self.setupProgressBarAnimation()
@@ -126,49 +132,47 @@ class StoryDetailViewController: UIViewController {
     }
     
     // MARK: image transition
-    func doTransition(index: Int, completion: (() -> Void)?) {
+    func doTransition(index: Int) {
         let duration = 0.5
 
-        if index == imagesList.count - 1 {
-            return
-        }
+//        if index == imagesList.count - 1 {
+//            return
+//        }
         
-        print("do transition")
-        UIView.transition(with: self.imageView, duration: duration, options: .transitionFlipFromRight) {
-            self.imageView.image = self.imagesList[index + 1]
+        //print("do transition")
+        UIView.transition(
+            with: self.imageView,
+            duration: duration,
+            options: .transitionFlipFromRight
+        ) {
+            self.imageView.image = self.currentImage
         } completion: { finished in
-            print("success?..\(finished)")
-            self.currentImageIndex += 1
+            //print("success?..\(finished)")
+            if self.currentImageIndex < self.postData.count - 1 {
+                self.currentImageIndex += 1
+            }
             
             // if there is completion callback passed in, do execute
-            if let afterTransitionTodo = completion {
-                afterTransitionTodo()
-            }
+//            if let afterTransitionTodo = completion {
+//                afterTransitionTodo()
+//            }
         }
         
         
     }
     
-    // MARK: fetch all images
-    func downloadAllImages()  {
-        let dispatchGroup = DispatchGroup()
-        for post in postData {
-            dispatchGroup.enter()
-            downloadImage(url: post.imageLink ?? "", completion: { data in
-                DispatchQueue.main.async {
-                    self.imagesList.append(UIImage(data: data)!)
-                }
-                dispatchGroup.leave()
-            })
-            dispatchGroup.wait()
-        }
-        // start change image animation after download all photos
-        dispatchGroup.notify(queue: .main) {
-            //print("StoryDetailViewController complete download all image")
+    func downloadSelectedImages()  {
+        
+        let post = postData[currentImageIndex]
+        
+        downloadImage(url: post.imageLink ?? "", completion: { data in
+            DispatchQueue.main.async {
+                
+                self.currentImage = UIImage(data: data)!
+                self.autoChangeImage()
+            }
             
-            self.autoChangeImage()
-
-        }
-      
+        })
+        
     }
 }

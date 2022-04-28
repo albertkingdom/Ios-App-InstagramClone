@@ -10,6 +10,7 @@ import UIKit
 class StoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var containView: UIView!
     @IBOutlet weak var imageView: UIImageView!
+    var postData: Post!
     override func awakeFromNib() {
         super.awakeFromNib()
 //        backgroundColor = .brown
@@ -28,20 +29,28 @@ class StoryCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with data: Post){
+        
        
         if let imageLink = data.imageLink {
 
             downloadImage(url: imageLink) { data in
-                DispatchQueue.main.async { /// execute on main thread
-                    self.imageView.image = UIImage(data: data)
-
-
+                DispatchQueue.main.async {
+                    print("imageLink \(imageLink)...postData.imageLink \(self.postData.imageLink)")
+                    // because cell will be reused, and download image takes time, check image link is same, if same, change image, if not same, don't change image
+                    if imageLink == self.postData.imageLink {
+                        print("is same imageLink")
+                        self.imageView.image = UIImage(data: data)
+                    } else {
+                        print("is not same imageLink")
+                    }
                 }
             }
         }
         
     }
-    
+    override func prepareForReuse() {
+        self.imageView.image = nil //when reused, temporary reset image
+    }
     func setup(with image: UIImage){
         self.imageView.image = image
     }

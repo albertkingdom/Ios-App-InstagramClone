@@ -15,7 +15,7 @@
             <objects>
                 <viewController storyboardIdentifier="postList" modalPresentationStyle="fullScreen" id="UBJ-Cn-nxZ" customClass="PostListViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PQx-Us-lHa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9Y2-Qx-hw5">
@@ -156,7 +156,7 @@
             <objects>
                 <viewController storyboardIdentifier="NewArticleStep2VC" id="rwl-e9-r3P" customClass="NewArticleStep2ViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WJW-GA-FP7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Sg6-Fh-qR3">
@@ -658,8 +658,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagram Clone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNt-fc-3MJ">
+                                <rect key="frame" x="48" y="78" width="279" height="50.5"/>
+                                <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="OOd-L5-LIC">
-                                <rect key="frame" x="20" y="211" width="335" height="245"/>
+                                <rect key="frame" x="20" y="178.5" width="335" height="310"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oIj-NP-U1O">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
@@ -677,8 +683,16 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SwT-sH-tIz">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please input new password again" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JY5-I5-6ws">
                                         <rect key="frame" x="0.0" y="130" width="335" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="yNx-b5-1QL"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SwT-sH-tIz">
+                                        <rect key="frame" x="0.0" y="195" width="335" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.58431372549019611" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="GgV-Vw-KWr"/>
@@ -693,7 +707,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jkh-5E-MJE">
-                                        <rect key="frame" x="0.0" y="195" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="260" width="335" height="50"/>
                                         <color key="backgroundColor" systemColor="tertiarySystemFillColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="q7M-7m-eRA"/>
@@ -709,19 +723,21 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagram Clone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNt-fc-3MJ">
-                                <rect key="frame" x="48" y="110.5" width="279" height="50.5"/>
-                                <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="40"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z4T-Bq-kh5" userLabel="separator line">
-                                <rect key="frame" x="20" y="476" width="335" height="1"/>
+                                <rect key="frame" x="20" y="559.5" width="335" height="1"/>
                                 <color key="backgroundColor" systemColor="labelColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="o2y-aK-osZ"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cFT-eB-xvI">
+                                <rect key="frame" x="147" y="508.5" width="81.5" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="註冊帳號"/>
+                                <connections>
+                                    <action selector="pressSwitchModeButton" destination="fNq-uP-J0e" eventType="touchUpInside" id="aoz-TA-yXT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DQo-8L-XNi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -730,18 +746,24 @@
                             <constraint firstItem="z4T-Bq-kh5" firstAttribute="centerX" secondItem="ZnC-Lg-KyG" secondAttribute="centerX" id="4Di-rc-4BK"/>
                             <constraint firstItem="z4T-Bq-kh5" firstAttribute="width" secondItem="OOd-L5-LIC" secondAttribute="width" id="Bne-kX-c1T"/>
                             <constraint firstItem="OOd-L5-LIC" firstAttribute="top" secondItem="bNt-fc-3MJ" secondAttribute="bottom" constant="50" id="Gnn-PT-UsF"/>
+                            <constraint firstItem="cFT-eB-xvI" firstAttribute="centerX" secondItem="ZnC-Lg-KyG" secondAttribute="centerX" id="JC1-nH-hji"/>
                             <constraint firstItem="OOd-L5-LIC" firstAttribute="centerY" secondItem="ZnC-Lg-KyG" secondAttribute="centerY" id="MUy-78-9KF"/>
                             <constraint firstItem="bNt-fc-3MJ" firstAttribute="centerX" secondItem="ZnC-Lg-KyG" secondAttribute="centerX" id="VFo-gr-hbq"/>
                             <constraint firstItem="OOd-L5-LIC" firstAttribute="centerX" secondItem="ZnC-Lg-KyG" secondAttribute="centerX" id="Wm7-sx-7zJ"/>
                             <constraint firstItem="DQo-8L-XNi" firstAttribute="trailing" secondItem="OOd-L5-LIC" secondAttribute="trailing" constant="20" id="afY-uJ-0CQ"/>
-                            <constraint firstItem="z4T-Bq-kh5" firstAttribute="top" secondItem="OOd-L5-LIC" secondAttribute="bottom" constant="20" id="w68-MP-BR6"/>
+                            <constraint firstItem="z4T-Bq-kh5" firstAttribute="top" secondItem="cFT-eB-xvI" secondAttribute="bottom" constant="20" id="w68-MP-BR6"/>
+                            <constraint firstItem="cFT-eB-xvI" firstAttribute="top" secondItem="OOd-L5-LIC" secondAttribute="bottom" constant="20" id="zs5-Gg-UN9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="XU1-Mf-aok"/>
                     <connections>
                         <outlet property="emailInput" destination="oIj-NP-U1O" id="edT-Gh-Poi"/>
-                        <outlet property="passwordInput" destination="Qik-5H-UmF" id="FfA-0F-9Px"/>
+                        <outlet property="passwordInputFirst" destination="Qik-5H-UmF" id="MBG-nQ-Lh0"/>
+                        <outlet property="passwordInputSecond" destination="JY5-I5-6ws" id="ynE-8f-xtj"/>
                         <outlet property="separatorLine" destination="z4T-Bq-kh5" id="yxh-KO-Rvf"/>
+                        <outlet property="signInButton" destination="SwT-sH-tIz" id="utq-54-QK6"/>
+                        <outlet property="signUpButton" destination="Jkh-5E-MJE" id="zjw-bG-oZO"/>
+                        <outlet property="switchModeButton" destination="cFT-eB-xvI" id="AVl-Yv-4ir"/>
                         <segue destination="8NS-rf-uGi" kind="show" identifier="toTabBar" id="nlr-bZ-GFb"/>
                     </connections>
                 </viewController>
@@ -755,10 +777,10 @@
                 <tabBarController storyboardIdentifier="tabBarController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="8NS-rf-uGi" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="2cL-Xo-nOR"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QLk-zm-fC6">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="QLk-zm-fC6">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </tabBar>
                     <connections>
                         <segue destination="dAc-kH-QE7" kind="relationship" relationship="viewControllers" id="0uQ-lS-dDC"/>
@@ -774,7 +796,9 @@
         <scene sceneID="fNG-ET-pb5">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dAc-kH-QE7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="house" catalog="system" id="gEn-qA-lhA"/>
+                    <tabBarItem key="tabBarItem" title="" image="house" catalog="system" id="gEn-qA-lhA">
+                        <color key="badgeColor" systemColor="systemBackgroundColor"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JsN-20-XAk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -794,7 +818,7 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="8iP-mA-XKX" customClass="NewArticleViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NWl-UT-Ynm">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="z2w-iS-KRo">
@@ -1207,7 +1231,7 @@
             <objects>
                 <viewController storyboardIdentifier="profilePageClone" modalPresentationStyle="fullScreen" id="bfQ-qc-DIQ" customClass="ProfileViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FxH-5v-O5Q">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7dU-bW-0rV">

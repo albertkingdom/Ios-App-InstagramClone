@@ -18,12 +18,12 @@ class PostListViewController: UIViewController {
         return FirebaseService()
     }()
     var db: Firestore!
-    var listener: ListenerRegistration!
+//    var listener: ListenerRegistration!
     
     var postList : [Post] = [] {
         didSet {
-            if oldValue.count == 0 {
-                // only reload all data when first time retrieving data, preventing collectionView flashing when any modified
+            if oldValue.count < postList.count {
+                // only reload all data when first time retrieving data or new post added, preventing collectionView flashing when any modified
                 collectionView.reloadData()
             }
         }
@@ -44,9 +44,7 @@ class PostListViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        
-        self.tabBarController?.tabBar.barTintColor = .white
+
         
         
         
@@ -103,81 +101,52 @@ class PostListViewController: UIViewController {
         return layout
     }
   
-
-
-    func getPost(){
-       
-        // Create a query against the collection.
-        let postRef = db.collection("post")
-        
-        let query = postRef.whereField("userEmail", isNotEqualTo: currentLoginUserEmail).order(by: "userEmail").order(by: "timestamp", descending: true)
-        listener = query
-            .addSnapshotListener { documentSnapshot, error in
-                
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
-                    return
+    func getPost() {
+        firebaseService.getPostsForPostListVC { posts, postsIds, snapshot in
+            self.postList = posts
+            self.postIdList = postsIds
+            
+           
+            snapshot.documentChanges.forEach { diff in
+                // listen for data added and send notification to user
+                if diff.type == .added,
+                   let userEmail = diff.document.data()["userEmail"] as? String,
+                   self.findIdInUserDefaults(targetId: diff.document.documentID) == nil
+                {
+                    // new post, send local notification
+                    LocalNotification.sendLocalNotification(email: userEmail)
+                    // save document id to user default
+                    if let emailAddress = self.currentLoginUserEmail {
+                        self.userDefault.setValue([emailAddress:postsIds], forKey: "postIds")
+                    }
+                } else {
+                    // existing post
                 }
-                
-               
-                
-                let posts = document.documents.map { QueryDocumentSnapshot -> Post  in
+                // listen for data modified
+                if diff.type == .modified {
                     
-                    guard let post = try? QueryDocumentSnapshot.data(as: Post.self) else {
-                        fatalError("\(error?.localizedDescription)" as! String)
-                    }
+                    let modifiedIndex = self.postIdList.firstIndex(of: diff.document.documentID)
 
-                    return post
-                }
-                
-                let postsIds = document.documents.map { QueryDocumentSnapshot -> String in
-                    guard let id = try? QueryDocumentSnapshot.documentID else {
-                       fatalError()
-                    }
-              
-                    return id
-                }
-                // save document id to user default
-                if let emailAddress = self.currentLoginUserEmail {
-                    self.userDefault.setValue([emailAddress:postsIds], forKey: "postIds")
-                }
-
-                self.postList = posts
-                self.postIdList = postsIds
-                //print("will reload collection view!")
-                //self.collectionView.reloadData()
-                
-                document.documentChanges.forEach { diff in
-                    // listen for data added and send notification to user
-                    if diff.type == .added, let userEmail = diff.document.data()["userEmail"] as? String, let savedDocumentIds = self.userDefault.object(forKey: "postIds") as? [String: [String]]{
-
-                        if let index = savedDocumentIds[self.currentLoginUserEmail!]?.firstIndex(where: { id in
-                            id == diff.document.documentID
-                            
-                        }) {
-                            // existing post
-                        }else {
-                            // new post, send local notification
-                            LocalNotification.sendLocalNotification(email: userEmail)
-                        }
-                        
-                        
-                    }
-                    // listen for data modified
-                    if diff.type == .modified {
-                        
-                        let modifiedIndex = self.postIdList.firstIndex(of: diff.document.documentID)
-
-                        print("will reload items-----\(modifiedIndex)")
-                        // only update the modified item
-                        self.collectionView.reloadItems(at: [IndexPath(item: modifiedIndex!, section: 1)])
-                    }
+                    print("will reload items-----\(modifiedIndex)")
+                    // only update the modified item
+                    self.collectionView.reloadItems(at: [IndexPath(item: modifiedIndex!, section: 1)])
                 }
             }
+        }
+        
+    }
+
+    func findIdInUserDefaults(targetId: String) -> Int? {
+        guard let savedDocumentIds = self.userDefault.object(forKey: "postIds") as? [String: [String]] else { return nil }
+        
+        let result = savedDocumentIds[self.currentLoginUserEmail!]?.firstIndex(where: { id in
+            id == targetId
+        })
+        return result
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        listener.remove()
+        firebaseService.removeListener()
     }
 }
 
@@ -227,6 +196,7 @@ extension PostListViewController: UICollectionViewDataSource {
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "storyCell", for: indexPath) as! StoryCollectionViewCell
             let post = postList[indexPath.row]
+            cell.postData = post
             cell.configure(with: post)
             //cell.setup(with: imagesList[indexPath.row])
             return cell

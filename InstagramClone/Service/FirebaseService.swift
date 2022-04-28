@@ -13,7 +13,7 @@ import FirebaseAuth
 class FirebaseService {
     let currentLoginUserEmail = Auth.auth().currentUser?.email
     let db = Firestore.firestore()
-    
+    var listener: ListenerRegistration?
     // MARK: profileVC
     func getFollowingUser(email: String?, complete: @escaping ([String]) -> Void){
         guard let email = email else { return }
@@ -155,6 +155,44 @@ class FirebaseService {
         }
     }
     
+    func getPostsForPostListVC(completion: @escaping (_ posts: [Post], _ postsIds:[String], _ snapshot: QuerySnapshot) -> Void){
+       
+        // Create a query against the collection.
+        let postRef = db.collection("post")
+        
+        let query = postRef.whereField("userEmail", isNotEqualTo: currentLoginUserEmail!).order(by: "userEmail").order(by: "timestamp", descending: true)
+        listener = query
+            .addSnapshotListener { documentSnapshot, error in
+                
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
+                }
+                
+               
+                
+                let posts = document.documents.map { QueryDocumentSnapshot -> Post  in
+                    
+                    guard let post = try? QueryDocumentSnapshot.data(as: Post.self) else {
+                        fatalError("\(String(describing: error?.localizedDescription))")
+                    }
+
+                    return post
+                }
+                
+                let postsIds = document.documents.map { QueryDocumentSnapshot -> String in
+                    let postId = QueryDocumentSnapshot.documentID
+              
+                    return postId
+                }
+                
+                completion(posts, postsIds, document)
+
+            }
+    }
+    func removeListener() {
+        listener?.remove()
+    }
     // MARK: CommentListVC
     func addComment(commentContent: String, postId: String, complete: @escaping () -> Void) {
         let postRef = db.collection("post").document(postId)
