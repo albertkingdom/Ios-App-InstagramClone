@@ -10,35 +10,50 @@ import UIKit
 let TAG = "StoryDetailViewController"
 
 class StoryDetailViewController: UIViewController {
+    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var imageView: UIImageView!
+    var barAnimation: UIViewPropertyAnimator!
+    var initialIndex = 0
     var postData: [Post] = []
     var currentImageIndex: Int! {
         
         didSet {
-            downloadSelectedImages()
+           
+            print("index = \(String(describing: currentImageIndex))")
+            if currentImageIndex < postData.count {
+                downloadSelectedImages()
+            }
+            
+            if currentImageIndex == postData.count {
+                dismiss(animated: true, completion: nil)
+            }
+            
         }
     }
     
-    var changeImageTimer: Timer?
    
-    //var imagesList: [UIImage] = []
     var currentImage: UIImage! {
         didSet {
-            if oldValue == nil {
-                print("currentImage old value is nil")
-                // load the image at first time complete download image
-                self.imageView.image = currentImage
-                
-            }
+            self.progressBar.setProgress(0.0, animated: false)
+            
+            cardFlip()
         }
     }
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var progressBar: UIProgressView!
+
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupGesture()
-        setupProgressView()
+        
+        barAnimation = configureProgressBarAnimation()
 
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        print("viewDidAppear, progressbar progress = \(progressBar.progress)")
+        self.currentImageIndex = initialIndex
     }
     func setupGesture() {
         let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
@@ -55,21 +70,26 @@ class StoryDetailViewController: UIViewController {
             switch swipeGesture.direction {
             case .down:
                 //print("swipe down")
+                barAnimation.stopAnimation(true)
                 dismiss(animated: true, completion: nil)
-                changeImageTimer?.invalidate()
+
             case .left:
                 //print("swipe left")
-                changeImageTimer?.invalidate()
-                
-                //print("timer stop")
-                if currentImageIndex + 1 <= postData.count - 1 {
 
-                    currentImageIndex += 1
-                }else {
-                    dismiss(animated: true, completion: nil)
-                    changeImageTimer?.invalidate()
-                }
+                currentImageIndex += 1
+                barAnimation.stopAnimation(true)
                 
+                switch barAnimation.state {
+                case .inactive:
+                    print("animation state: inactive")
+                case .active:
+                    print("animation state: active")
+                case .stopped:
+                    print("animation state: stopped")
+                default:
+                    return
+                }
+              
             default:
                 break
 
@@ -77,67 +97,33 @@ class StoryDetailViewController: UIViewController {
         }
     }
      
-    
-    
+
+
    
-    
-
-    func setupProgressView() {
-        progressBar.progressTintColor = .blue
-
-    }
-    func setupProgressBarAnimation(){
-        self.progressBar.setProgress(0, animated: false)
-        self.progressBar.layoutIfNeeded()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-              
-           self.progressBar.setProgress(1.0, animated: false)
-          
-            UIView.animate(withDuration: 5, delay: 0, options: [], animations: { [unowned self] in
-                self.progressBar.setProgress(1.0, animated: false)
-                self.progressBar.layoutIfNeeded()
-              
-            })
- 
-        }
-    }
-    func autoChangeImage() {
-        //print("autoChangeImage")
+    func configureProgressBarAnimation() -> UIViewPropertyAnimator {
+        print("start animateBar")
         
-        // load the first image
-        //self.imageView.image = self.currentImage
-    
-        setupProgressBarAnimation()
-        
-        // setup timer
-        changeImageTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
-            //print("timer start")
-            //print("timer current index..\(self.currentImageIndex)")
+        let animator = UIViewPropertyAnimator.init(duration: 3.0, curve: .linear) {
             
-            if self.currentImageIndex + 1 > self.postData.count - 1 {
-                timer.invalidate() //stop timer
-                
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            // MARK: image transition
-            self.doTransition(index: self.currentImageIndex)
-            
-            //-----------
-            self.setupProgressBarAnimation()
-
         }
-  
-      
+        
+        animator.addAnimations {
+            self.progressBar.setProgress(1.0, animated: true)
+        }
+        
+        animator.addCompletion {  _ in
+            print("finish animate bar")
+            
+            self.progressBar.setProgress(0.0, animated: false)
+            self.currentImageIndex += 1
+        }
+        
+        return animator
     }
     
-    // MARK: image transition
-    func doTransition(index: Int) {
+
+    func cardFlip() {
         let duration = 0.5
-
-//        if index == imagesList.count - 1 {
-//            return
-//        }
         
         //print("do transition")
         UIView.transition(
@@ -147,32 +133,29 @@ class StoryDetailViewController: UIViewController {
         ) {
             self.imageView.image = self.currentImage
         } completion: { finished in
-            //print("success?..\(finished)")
-            if self.currentImageIndex < self.postData.count - 1 {
-                self.currentImageIndex += 1
-            }
-            
-            // if there is completion callback passed in, do execute
-//            if let afterTransitionTodo = completion {
-//                afterTransitionTodo()
-//            }
+            print("card flip finished?..\(finished)")
+            // run progress bar animation
+            self.barAnimation = self.configureProgressBarAnimation() // reconfigure animation so that it can run again
+            self.barAnimation.startAnimation()
+
         }
-        
-        
     }
     
     func downloadSelectedImages()  {
-        
+        self.progressBar.setProgress(0.0, animated: false)
         let post = postData[currentImageIndex]
         
-        downloadImage(url: post.imageLink ?? "", completion: { data in
-            DispatchQueue.main.async {
-                
-                self.currentImage = UIImage(data: data)!
-                self.autoChangeImage()
+        DownLoadImageService.shared.downloadImage(url: post.imageLink ?? "") { result in
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    print("finish download image")
+                    self.currentImage = UIImage(data: data)!
+                }
+            case .failure(let error):
+                print(error)
             }
-            
-        })
+        }
         
     }
 }

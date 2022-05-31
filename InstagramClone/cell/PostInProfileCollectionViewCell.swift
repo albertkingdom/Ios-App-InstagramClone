@@ -12,20 +12,18 @@ class PostInProfileCollectionViewCell: UICollectionViewCell {
     func configure(with data: Post){
         
         if let imageLink = data.imageLink {
-            downloadImage(url: imageLink)
-        }
-    }
-    func downloadImage(url: String) {
-        if let url = URL(string: url) {
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                guard let data = data, error == nil else { return }
-                
-                DispatchQueue.main.async { /// execute on main thread
-                    self.imageView.image = UIImage(data: data)
+            
+            DownLoadImageService.shared.downloadImage(url: imageLink) { result in
+                switch result {
+                case .success(let data):
+                    DispatchQueue.main.async {
+                        self.imageView.image = UIImage(data: data)
+                    }
+                case .failure(let error):
+                    print(error)
                 }
             }
-            
-            task.resume()
         }
     }
+    
 }

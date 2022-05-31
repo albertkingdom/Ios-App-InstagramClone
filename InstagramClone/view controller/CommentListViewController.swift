@@ -35,7 +35,8 @@ class CommentListViewController: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         tableView.dataSource = self
-
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "CommentTableViewCell", bundle: nil),forCellReuseIdentifier: "commentCell")
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
         
@@ -61,9 +62,14 @@ class CommentListViewController: UIViewController {
         if let profilePhotoUrl = Auth.auth().currentUser?.photoURL {
             print("profilePhotoUrl..\(profilePhotoUrl)")
             
-            downloadImage(url: profilePhotoUrl.absoluteString) { imageData in
-                DispatchQueue.main.async {
-                    self.profileImageView.image = UIImage(data: imageData)
+            DownLoadImageService.shared.downloadImage(url: profilePhotoUrl.absoluteString) { result in
+                switch result {
+                case .success(let data):
+                    DispatchQueue.main.async {
+                        self.profileImageView.image = UIImage(data: data)
+                    }
+                case .failure(let error):
+                    print(error)
                 }
             }
         }
@@ -71,20 +77,22 @@ class CommentListViewController: UIViewController {
 
 }
 
-extension CommentListViewController: UITableViewDataSource {
+extension CommentListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return commentList?.count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "commentListTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! CommentTableViewCell
         cell.selectionStyle = .none
         if let comment = commentList?[indexPath.row] {
-        cell.textLabel?.text = comment.userEmail
-            cell.textLabel?.font = .boldSystemFont(ofSize: 14)
-        cell.detailTextLabel?.text = comment.commentContent
+
+            cell.configure(with: comment)
         }
         return cell
 
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
     }
 }
 

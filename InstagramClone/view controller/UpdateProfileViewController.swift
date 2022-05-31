@@ -55,10 +55,14 @@ class UpdateProfileViewController: UIViewController {
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            pickImageAlertController.dismiss(animated: true, completion: nil)
+        }
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             pickImageAlertController.addAction(cameraAction)
         }
         pickImageAlertController.addAction(albumAction)
+        pickImageAlertController.addAction(cancelAction)
         present(pickImageAlertController, animated: true, completion: nil)
     }
     
@@ -102,11 +106,16 @@ class UpdateProfileViewController: UIViewController {
     
     func downloadAvatorImage(url: URL) {
         
-        downloadImage(url: url.absoluteString) { imageData in
-            DispatchQueue.main.async {
-                if self.isLogin != nil{
-                    self.profileImage.image = UIImage(data: imageData)
+        DownLoadImageService.shared.downloadImage(url: url.absoluteString) { result in
+            switch result {
+            case .success(let data):
+                if let _ = self.isLogin {
+                    DispatchQueue.main.async {
+                        self.profileImage.image = UIImage(data: data)
+                    }
                 }
+            case .failure(let error):
+                print(error)
             }
         }
     }

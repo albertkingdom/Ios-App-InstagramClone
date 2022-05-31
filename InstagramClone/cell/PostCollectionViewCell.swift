@@ -39,7 +39,7 @@ class PostCollectionViewCell: UICollectionViewCell {
     lazy var likeAnimator = LikeAnimator(image: heartAnimateImage)
     var likeCount: Int = 0 {
         didSet {
-            likeCountLabel.text = " \(likeCount)個讚"
+            likeCountLabel.text = "\(likeCount)個讚"
         }
     }
     var isLike: Bool = false {

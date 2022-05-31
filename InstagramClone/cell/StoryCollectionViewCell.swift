@@ -13,8 +13,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     var postData: Post!
     override func awakeFromNib() {
         super.awakeFromNib()
-//        backgroundColor = .brown
-//        layer.cornerRadius = frame.height
+
         containView.layer.cornerRadius = frame.height
         containView.layer.borderColor = UIColor.systemPink.cgColor
         containView.layer.borderWidth = 2
@@ -33,16 +32,22 @@ class StoryCollectionViewCell: UICollectionViewCell {
        
         if let imageLink = data.imageLink {
 
-            downloadImage(url: imageLink) { data in
-                DispatchQueue.main.async {
-                    print("imageLink \(imageLink)...postData.imageLink \(self.postData.imageLink)")
-                    // because cell will be reused, and download image takes time, check image link is same, if same, change image, if not same, don't change image
-                    if imageLink == self.postData.imageLink {
-                        print("is same imageLink")
-                        self.imageView.image = UIImage(data: data)
-                    } else {
-                        print("is not same imageLink")
+            
+            DownLoadImageService.shared.downloadImage(url: imageLink) { result in
+                switch result {
+                case .success(let data):
+                    DispatchQueue.main.async {
+                        //print("imageLink \(imageLink)...postData.imageLink \(self.postData.imageLink)")
+                        // because cell will be reused, and download image takes time, check image link is same, if same, change image, if not same, don't change image
+                        if imageLink == self.postData.imageLink {
+                            print("is same imageLink")
+                            self.imageView.image = UIImage(data: data)
+                        } else {
+                            print("is not same imageLink")
+                        }
                     }
+                case .failure(let error):
+                    print(error)
                 }
             }
         }

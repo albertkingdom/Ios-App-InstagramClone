@@ -55,11 +55,11 @@ class ProfileViewController: UIViewController {
             self.signOut()
         }
         
-        let dimissAction = UIAlertAction(title: "Cancel", style: .default) { _ in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
             profilMenuController.dismiss(animated: true, completion: nil)
         }
         profilMenuController.addAction(signOutAction)
-        profilMenuController.addAction(dimissAction)
+        profilMenuController.addAction(cancelAction)
         present(profilMenuController, animated: true, completion: nil)
     }
 
@@ -117,16 +117,23 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         if let profilePhotoUrl = Auth.auth().currentUser?.photoURL {
             print("profilePhotoUrl..\(profilePhotoUrl)")
-            downloadImage(url: profilePhotoUrl.absoluteString) { imageData in
-                DispatchQueue.main.async {
-                    if let email = self.email {
-                        // for viewing other user profile
-                    } else {
-                        // viewing login user profile
-                        self.profileImageView.image = UIImage(data: imageData)
+            DownLoadImageService.shared.downloadImage(url: profilePhotoUrl.absoluteString) { result in
+                switch result {
+                case .success(let data):
+                    DispatchQueue.main.async {
+                        
+                        if let _ = self.email {
+                            // for viewing other user profile
+                        } else {
+                            // viewing login user profile
+                            self.profileImageView.image = UIImage(data: data)
+                        }
                     }
+                case .failure(let error):
+                    print(error)
                 }
             }
+            
         }
     }
     

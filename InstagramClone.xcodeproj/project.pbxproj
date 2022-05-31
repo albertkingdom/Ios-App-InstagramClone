@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A12B6BEE2760FFF700FE636A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B6BED2760FFF700FE636A /* AppDelegate.swift */; };
 		A12B6BF02760FFF700FE636A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B6BEF2760FFF700FE636A /* SceneDelegate.swift */; };
-		A12B6BF22760FFF700FE636A /* ProfileViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B6BF12760FFF700FE636A /* ProfileViewControllerOld.swift */; };
 		A12B6BF52760FFF700FE636A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A12B6BF32760FFF700FE636A /* Main.storyboard */; };
 		A12B6BF72760FFFA00FE636A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A12B6BF62760FFFA00FE636A /* Assets.xcassets */; };
 		A12B6BFA2760FFFA00FE636A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A12B6BF82760FFFA00FE636A /* LaunchScreen.storyboard */; };
@@ -31,6 +30,8 @@
 		A171BFF42769937C00BE75AB /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A171BFF32769937C00BE75AB /* LoadingViewController.swift */; };
 		A188005F27664BC10014BFF0 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A188005E27664BC10014BFF0 /* TestViewController.swift */; };
 		A188006127673BDB0014BFF0 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A188006027673BDB0014BFF0 /* UpdateProfileViewController.swift */; };
+		A1AE7D80283E5BA300F2BBD2 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE7D7E283E5BA300F2BBD2 /* CommentTableViewCell.swift */; };
+		A1AE7D81283E5BA300F2BBD2 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1AE7D7F283E5BA300F2BBD2 /* CommentTableViewCell.xib */; };
 		DF02036E2813E00A00543E54 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF02036D2813E00A00543E54 /* UIViewController+Extension.swift */; };
 		DF0203702813E0F200543E54 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF02036F2813E0F200543E54 /* CustomAlertController.swift */; };
 		DF02037228143C7A00543E54 /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF02037128143C7900543E54 /* ValidationService.swift */; };
@@ -65,7 +66,6 @@
 		A12B6BEA2760FFF700FE636A /* InstagramClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstagramClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A12B6BED2760FFF700FE636A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A12B6BEF2760FFF700FE636A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A12B6BF12760FFF700FE636A /* ProfileViewControllerOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerOld.swift; sourceTree = "<group>"; };
 		A12B6BF42760FFF700FE636A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A12B6BF62760FFFA00FE636A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A12B6BF92760FFFA00FE636A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -84,6 +84,8 @@
 		A171BFF32769937C00BE75AB /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		A188005E27664BC10014BFF0 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		A188006027673BDB0014BFF0 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
+		A1AE7D7E283E5BA300F2BBD2 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		A1AE7D7F283E5BA300F2BBD2 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		DF02036D2813E00A00543E54 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		DF02036F2813E0F200543E54 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		DF02037128143C7900543E54 /* ValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
@@ -148,7 +150,7 @@
 		A12B6BEC2760FFF700FE636A /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
-				DF02036C2813DFE100543E54 /* Extensioin */,
+				DF02036C2813DFE100543E54 /* Extension */,
 				A171BFEE2768A94700BE75AB /* Service */,
 				A171BFED2768A90F00BE75AB /* Model */,
 				A188006227687C0C0014BFF0 /* view controller */,
@@ -175,6 +177,8 @@
 				DF0C80122787ED95009A2E9F /* StoryCollectionViewCell.swift */,
 				DF0C80132787ED95009A2E9F /* StoryCollectionViewCell.xib */,
 				DF07242F2794412B005874F0 /* MultipleImageLoaderCollectionViewCell.swift */,
+				A1AE7D7E283E5BA300F2BBD2 /* CommentTableViewCell.swift */,
+				A1AE7D7F283E5BA300F2BBD2 /* CommentTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -205,7 +209,6 @@
 			isa = PBXGroup;
 			children = (
 				A12B6C11276254E700FE636A /* LoginViewController.swift */,
-				A12B6BF12760FFF700FE636A /* ProfileViewControllerOld.swift */,
 				A188005E27664BC10014BFF0 /* TestViewController.swift */,
 				A12B6C25276454FB00FE636A /* CommentListViewController.swift */,
 				A12B6C1A276314BC00FE636A /* NewArticleViewController.swift */,
@@ -220,12 +223,12 @@
 			path = "view controller";
 			sourceTree = "<group>";
 		};
-		DF02036C2813DFE100543E54 /* Extensioin */ = {
+		DF02036C2813DFE100543E54 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				DF02036D2813E00A00543E54 /* UIViewController+Extension.swift */,
 			);
-			path = Extensioin;
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		DF0203782814400000543E54 /* InstagramCloneTests */ = {
@@ -334,6 +337,7 @@
 				A12B6BFA2760FFFA00FE636A /* LaunchScreen.storyboard in Resources */,
 				A12B6C0B27624EE500FE636A /* GoogleService-Info.plist in Resources */,
 				A12B6BF72760FFFA00FE636A /* Assets.xcassets in Resources */,
+				A1AE7D81283E5BA300F2BBD2 /* CommentTableViewCell.xib in Resources */,
 				DF0C80152787ED95009A2E9F /* StoryCollectionViewCell.xib in Resources */,
 				A12B6BF52760FFF700FE636A /* Main.storyboard in Resources */,
 			);
@@ -360,11 +364,11 @@
 				A12B6C042761F41C00FE636A /* PostCollectionViewCell.swift in Sources */,
 				A12B6C072761FAFA00FE636A /* PostListViewController.swift in Sources */,
 				A12B6C26276454FB00FE636A /* CommentListViewController.swift in Sources */,
+				A1AE7D80283E5BA300F2BBD2 /* CommentTableViewCell.swift in Sources */,
 				A188005F27664BC10014BFF0 /* TestViewController.swift in Sources */,
 				DF0724302794412B005874F0 /* MultipleImageLoaderCollectionViewCell.swift in Sources */,
 				DF80CFAB2770329700085E7B /* ProfileViewController.swift in Sources */,
 				DF14417A2785550A0038D05D /* LocalNotification.swift in Sources */,
-				A12B6BF22760FFF700FE636A /* ProfileViewControllerOld.swift in Sources */,
 				DF0203702813E0F200543E54 /* CustomAlertController.swift in Sources */,
 				DF80CFAD2770369F00085E7B /* ProfileBottomViewController.swift in Sources */,
 				A12B6C092761FDB200FE636A /* Post.swift in Sources */,
@@ -546,7 +550,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5L8228KGK3;
+				DEVELOPMENT_TEAM = UZ2Z639589;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InstagramClone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -574,7 +578,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5L8228KGK3;
+				DEVELOPMENT_TEAM = UZ2Z639589;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InstagramClone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

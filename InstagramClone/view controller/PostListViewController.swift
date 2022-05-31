@@ -162,8 +162,8 @@ extension PostListViewController: UICollectionViewDelegate {
             
           
             detailVC.postData = self.postList
-            //detailVC.imagesList = self.imagesList
-            detailVC.currentImageIndex = indexPath.row
+
+            detailVC.initialIndex = indexPath.row
 
             present(detailVC, animated: true, completion: nil)
         case 1:

@@ -85,6 +85,8 @@ class NewArticleStep2ViewController: UIViewController {
         postContent.layer.cornerRadius = 10
        
         finishButton.layer.cornerRadius = 5
+        
+        self.hideKeyboardWhenTappedAround()
     }
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.popViewController(animated: true)
